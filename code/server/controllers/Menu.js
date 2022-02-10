@@ -11,9 +11,9 @@ class Controller {
     try {
       const parsedData = parserUrl(req)['filters']
 
-      const searchSlugs = Object.values(parsedData).flat(1)
+      const searchSlugs = parsedData && Object.values(parsedData).flat(1)
 
-      const tagIDs = await Tag.find({ slug: searchSlugs }, { _id: true })
+      const tagIDs = await Tag.find((!searchSlugs) ? {} : { slug: searchSlugs }, { _id: true })
 
       const allTags = await Product.find({ tagsID: { $in: tagIDs } }, { _id: false, tagsID: true })
 
@@ -36,9 +36,9 @@ class Controller {
 
       for (let idx = 0; idx < allTagIDs.length; idx++) {
 
-        const tag = {...await Tag.find({_id: allTagIDs[idx]}, {__v: false})}[0]
+        const tag = { ...await Tag.find({ _id: allTagIDs[idx] }, { __v: false }) }[0]
 
-        const type = {...await Type.find({_id: tag.typeID}, {__v: false})}[0]
+        const type = { ...await Type.find({ _id: tag.typeID }, { __v: false }) }[0]
 
         filtersData[type._id] = {
           ...filtersData[type._id],
