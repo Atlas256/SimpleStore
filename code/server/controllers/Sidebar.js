@@ -4,7 +4,6 @@ import Product from '../models/Product.js'
 import parserUrl from '../helpers/parserUrl.js'
 
 
-
 class Controller {
 
   async getSidebarData(req, res) {
@@ -43,11 +42,9 @@ class Controller {
         filtersData[type._id] = {
           ...filtersData[type._id],
           type: type,
-          [tag._id]: tag
+          tags: filtersData[type._id] ? [...filtersData[type._id]['tags'], tag] : [tag]
         }
       }
-
-      console.log(filtersData);
 
       res.status(200).json(filtersData)
     } catch (error) {

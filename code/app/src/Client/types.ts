@@ -20,8 +20,8 @@ export type TCategoryData = {
 
 
 export type TSidebarData = {
-    type: TType
-    tags: TTag[]
+    [key: string]: {TType, TTag[]}
+
 }
 
 export type TPropduct = {

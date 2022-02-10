@@ -1,13 +1,14 @@
 import Router from 'express'
 import Admin from './controllers/Admin.js'
-import Order from './controllers/Order.js'
 import Type from './controllers/Type.js'
 import Tag from './controllers/Tag.js'
 import Product from './controllers/Product.js'
-import Menu from './controllers/Menu.js'
+import Sidebar from './controllers/Sidebar.js'
 
 const router = new Router()
 
+
+router.get('/sidebar/*', Sidebar.getSidebarData)
 
 router.post('/users', Admin.create)
 router.get('/users', Admin.getAll)
@@ -37,9 +38,5 @@ router.get('/products/:id', Product.getOne)
 router.put('/products/:id', Product.update)
 router.delete('/products/:id', Product.delete)
 router.get('/products/*', Product.getFromParams)
-//router.get('/products/params/*', Product.getFromParams) //?
-
-
-router.get('/sidebar/*', Menu.getSidebarData)
 
 export default router;

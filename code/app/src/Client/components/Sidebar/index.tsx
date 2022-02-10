@@ -17,7 +17,8 @@ const Body = styled.div`
 type TProps = {
   sidebarData: TSidebarData[]
   filters: any //!
-  onClickCheckbox: (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => void
+  onClickCheckbox: any
+  //onClickCheckbox: (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => void
 }
 
 
