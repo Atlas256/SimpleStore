@@ -1,38 +1,35 @@
 import Type from '../models/Type.js'
 import Tag from '../models/Tag.js'
+import Product from '../models/Product.js'
 import parserUrl from '../helpers/parserUrl.js'
 
 
 
 class Controller {
 
-  async getCategories(req, res) {
+  async getSidebarData(req, res) {
     try {
-      const categoryID = await Type.find({ slug: 'category' }, { _id: true })
-      const categories = await Tag.find({ typeID: categoryID }, { _id: true, title: true, slug: true })
+      const parsedData = parserUrl(req)['filters']
 
-      res.status(200).json({ categories })
-    } catch (error) {
-      res.status(500).json(error)
-    }
-  }
+      const searchSlugs = Object.values(parsedData).flat(1)
 
-  async getCategory(req, res) {
-    try {
-      const categoryName = parserUrl(req)['category']
+      const tagIDs = await Tag.find({slug: searchSlugs}, {_id: true})
 
-      const typesID = (await Tag.findOne({ slug: categoryName }, { _id: false, typeArrayID: true }))['typeArrayID']
-      const typesArray = await Type.find({ _id: { $in: typesID } }, { _id: true, title: true, slug: true, })
+      const allTags = await Product.find({tagsID: {$in: tagIDs}}, {_id: false, tagsID: true})
 
-      const sidebarData = await typesArray.reduce(
-        async (promiseAcc, type) => {
-          const acc = await promiseAcc
-          const tags = await Tag.find({ typeID: type['_id'] }, { typeArrayID: false })
+      const allTagIDs = allTags.flat(1).reduce((acc, item) => {
+        acc = [...acc, ...item['tagsID']]
+        return acc
+      }, []);
 
-          return [...acc, { 'type': type, 'tags': tags }]
-        }, [])
+      console.log(allTagIDs);
 
-      res.status(200).json(sidebarData)
+
+
+
+
+
+      res.status(200).json({123: 123})
     } catch (error) {
       res.status(500).json(error)
     }

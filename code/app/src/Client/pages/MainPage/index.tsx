@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import NewsGoods from '../../components/Novelty';
-import CategoryContainer from "../../containers/MainPage/CategoriesContainer";
 
 
 
@@ -24,9 +23,6 @@ export default function () {
     <Page>
       <div style={{width: '100%', marginBottom: '50px'}}>
         <NewsGoods />
-      </div>
-      <div>
-        <CategoryContainer />
       </div>
     </Page>
   )

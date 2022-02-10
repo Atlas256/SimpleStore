@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Accordion, Form } from 'react-bootstrap'
 import { TSidebarData, TTag } from '../../types'
-import { TFilterItem } from '../../containers/ProductsPage/SidebarContainer'
+
 
 const Body = styled.div`
   width: 200px;
@@ -16,7 +16,7 @@ const Body = styled.div`
 
 type TProps = {
   sidebarData: TSidebarData[]
-  filters: TFilterItem
+  filters: any //!
   onClickCheckbox: (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => void
 }
 
@@ -27,7 +27,6 @@ export default function ({ sidebarData, filters, onClickCheckbox }: TProps) {
   return (
     <Body>
       <Accordion defaultActiveKey="0">
-
         {
           sidebarData.map(({type, tags}: TSidebarData) =>
             <Accordion.Item key={type._id} eventKey={type._id} style={{borderRight: 'none'}}>

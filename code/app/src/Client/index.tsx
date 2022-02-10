@@ -41,7 +41,7 @@ export default function () {
         <Routes>
           <Route path="" element={<MainPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/*" element={<ProductsPage />} />
+          <Route path="/products/*" element={<ProductsPage />} />
           <Route path="/product/*" element={<OnePageContainer />} />
         </Routes>
       </div>

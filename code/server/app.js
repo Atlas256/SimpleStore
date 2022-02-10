@@ -30,11 +30,9 @@ async function startApp() {
 
     app.listen(PORT, () => console.log('SERVER:', PORT))
   } catch (err) {
-    console.log(err); 
+    console.log(err);
   }
 }
 
 
 startApp()
-
-

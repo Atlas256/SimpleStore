@@ -41,9 +41,6 @@ router.get('/products/*', Product.getFromParams)
 
 
 
-router.post('/order', Order.create)
-
-router.get('/categories', Menu.getCategories)
-router.get('/categories/*', Menu.getCategory)
+router.get('/sidebar/*', Menu.getSidebarData)
 
 export default router;
