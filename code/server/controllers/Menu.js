@@ -30,24 +30,26 @@ class Controller {
             }, {})
         )
 
-      console.log(allTagIDs);
+      //----
 
-      let filtersData = []
+      let filtersData = {}
 
       for (let idx = 0; idx < allTagIDs.length; idx++) {
-        
+
         const tag = {...await Tag.find({_id: allTagIDs[idx]}, {__v: false})}[0]
 
         const type = {...await Type.find({_id: tag.typeID}, {__v: false})}[0]
 
-        console.log({type, tag});
-        
-        
+        filtersData[type._id] = {
+          ...filtersData[type._id],
+          type: type,
+          [tag._id]: tag
+        }
       }
 
+      console.log(filtersData);
 
-
-      res.status(200).json({ 123: 123 })
+      res.status(200).json(filtersData)
     } catch (error) {
       res.status(500).json(error)
     }
