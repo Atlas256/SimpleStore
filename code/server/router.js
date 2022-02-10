@@ -8,7 +8,7 @@ import Sidebar from './controllers/Sidebar.js'
 const router = new Router()
 
 
-router.get('/sidebar/*', Sidebar.getSidebarData)
+router.get('/sidebar/*', Sidebar.getSidebarData2)
 
 router.post('/users', Admin.create)
 router.get('/users', Admin.getAll)

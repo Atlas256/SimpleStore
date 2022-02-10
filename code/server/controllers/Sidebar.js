@@ -58,6 +58,61 @@ class Controller {
       res.status(500).json(error)
     }
   }
+
+  async getSidebarData2(req, res) {
+    try {
+      const parsedData = parserUrl(req)['filters']
+
+      const searchSlugs = parsedData && Object.values(parsedData).flat(1)
+
+      const tagIDs = await Tag.find((!searchSlugs) ? {} : { slug: searchSlugs }, { _id: true })
+
+      const productTagIDs = await Product.find({ tagsID: { $in: tagIDs } }, { _id: false, tagsID: true })
+
+      const usedTagIDs =
+        Object.values(
+          productTagIDs.flat(1)
+            .reduce((acc, item) => {
+              acc = [...acc, ...item['tagsID']]
+              return acc
+            }, [])
+            .reduce((acc, id) => {
+              acc[id] = id
+              return acc
+            }, {})
+        )
+
+      const usedTags = await Tag.find({ _id: usedTagIDs }, { __v: false })
+
+      const usedTypesID =
+        Object.values(
+          usedTags
+            .reduce((acc, item) => {
+              acc = [...acc, item.typeID]
+              return acc
+            }, [])
+            .reduce((acc, id) => {
+              acc[id] = id
+              return acc
+            }, {}))
+
+      const usedTypes = await Type.find({ _id: usedTypesID }, { __v: false })
+
+      
+      console.log(usedTags);
+      console.log(usedTypes);
+
+      usedTypes.reduce((acc, type) => {
+        acc[type['_id']] = 
+
+        //return acc
+      }, {})
+
+      res.status(200).json(Object.values(filtersData))
+    } catch (error) {
+      res.status(500).json(error)
+    }
+  }
 }
 
 
