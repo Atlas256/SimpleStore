@@ -7,7 +7,7 @@ import { TPropduct } from "../../types";
 
 
 async function getProducts(locationPath: string) {
-  const { data } = await axios.get(`http://localhost:5000/api/products/${locationPath}`)
+  const { data } = await axios.get(`http://localhost:5000/api${locationPath}`)
   return data
 }
 

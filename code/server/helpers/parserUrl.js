@@ -4,14 +4,13 @@ export default function(req) {
   const params = str
     .toLowerCase()
     .replace(/\//g, ';')
-    .replace(/[^a-z0-9=;,]/g, '')
+    .replace(/[^a-z0-9=;,_]/g, '')
     .split(';')
 
   const data = params.reduce((res, item) => {
     const [key, value] = item.split('=');
 
     switch (key) {
-      //case 'category': value.split(','); break;
       case 'page': res[key] = value; break;
       case 'sort': res[key] = value; break;
       case '': break;
@@ -19,6 +18,8 @@ export default function(req) {
     }
     return res;
   }, {})
+
+  //console.log(data);
 
   return data;
 }

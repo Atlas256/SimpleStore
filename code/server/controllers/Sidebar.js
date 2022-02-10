@@ -16,6 +16,7 @@ class Controller {
 
       const allTags = await Product.find({ tagsID: { $in: tagIDs } }, { _id: false, tagsID: true })
 
+
       const allTagIDs =
         Object.values(
           allTags.flat(1)
@@ -29,15 +30,17 @@ class Controller {
             }, {})
         )
 
+      console.log(2);
+
       //----
 
       let filtersData = {}
 
       for (let idx = 0; idx < allTagIDs.length; idx++) {
 
-        const tag = { ...await Tag.find({ _id: allTagIDs[idx] }, { __v: false }) }[0]
+        const [tag] = await Tag.find({ _id: allTagIDs[idx] }, { __v: false })
 
-        const type = { ...await Type.find({ _id: tag.typeID }, { __v: false }) }[0]
+        const [type] = await Type.find({ _id: tag.typeID }, { __v: false })
 
         filtersData[type._id] = {
           ...filtersData[type._id],
@@ -46,12 +49,15 @@ class Controller {
         }
       }
 
-      res.status(200).json(filtersData)
+      console.log(3);
+      console.log('-----------');
+
+
+      res.status(200).json(Object.values(filtersData))
     } catch (error) {
       res.status(500).json(error)
     }
   }
-
 }
 
 

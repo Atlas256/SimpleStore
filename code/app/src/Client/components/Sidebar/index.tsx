@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Accordion, Form } from 'react-bootstrap'
 import { TSidebarData, TTag } from '../../types'
+import { TFilter } from '../../containers/ProductsPage/SidebarContainer'
 
 
 const Body = styled.div`
@@ -16,9 +17,8 @@ const Body = styled.div`
 
 type TProps = {
   sidebarData: TSidebarData[]
-  filters: any //!
-  onClickCheckbox: any
-  //onClickCheckbox: (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => void
+  filters: TFilter
+  onClickCheckbox: (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => void
 }
 
 

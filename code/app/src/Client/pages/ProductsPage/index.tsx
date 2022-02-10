@@ -18,7 +18,7 @@ export default function () {
   return (
     <Page>
       <SidebarContainer />
-      {/*<ProductsListContainer />*/}
+      <ProductsListContainer />
     </Page>
   )
 }

@@ -25,10 +25,8 @@ class Controller {
   async getFromParams(req, res) {
     try {
       const { filters = {}, sort, page, category } = parserUrl(req)
-      const categoryID = await Tag.findOne({ slug: category }, { _id: true })
 
       const roolesSearchIDs = [
-        { tagsID: { $all: categoryID } },
         ...await Object.keys(filters).reduce(async (promiseAcc, typeSlug) => {
           const typeID = await Type.findOne({ slug: typeSlug }, { _id: true })
           const tagsID = await Tag.find({ typeID: typeID, slug: filters[typeSlug] }, { _id: true })

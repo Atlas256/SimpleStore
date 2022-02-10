@@ -10,7 +10,7 @@ export default function (str: string) {
     const [key, value] = item.split('=');
 
     switch (key) {
-      case 'category': res[key] = value; break;
+      //case 'category': res[key] = value; break;
       case 'page': res[key] = value; break;
       case 'sort': res[key] = value; break;
       case '': break;

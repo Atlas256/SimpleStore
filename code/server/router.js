@@ -33,10 +33,12 @@ router.delete('/tags/:id', Tag.delete)
 
 router.post('/products', Product.create)
 router.get('/products', Product.getAll)
+router.get('/products/*', Product.getFromParams)
 router.get('/products/slug/:id', Product.getOneFromSlug)
 router.get('/products/:id', Product.getOne)
 router.put('/products/:id', Product.update)
 router.delete('/products/:id', Product.delete)
-router.get('/products/*', Product.getFromParams)
+
+
 
 export default router;
