@@ -11,7 +11,7 @@ export default function(req) {
     const [key, value] = item.split('=');
 
     switch (key) {
-      case 'category': value.split(','); break;
+      //case 'category': value.split(','); break;
       case 'page': res[key] = value; break;
       case 'sort': res[key] = value; break;
       case '': break;

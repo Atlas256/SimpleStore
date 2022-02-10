@@ -16,8 +16,8 @@ export default function() {
 
 
     useEffect(() => {
-        getSidebarData().then(())
-    })
+        
+    }, [])
 
 
 

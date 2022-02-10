@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import ProductsListContainer from '../../containers/ProductsPage/ProductsListContainer'
-import SidebarContainer from '../../containers/ProductsPage/__SidebarContainer'
+import SidebarContainer from '../../containers/ProductsPage/SidebarContainer'
 
 
 

@@ -40,7 +40,6 @@ router.get('/products/*', Product.getFromParams)
 //router.get('/products/params/*', Product.getFromParams) //?
 
 
-
 router.get('/sidebar/*', Menu.getSidebarData)
 
 export default router;

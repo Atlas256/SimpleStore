@@ -1,4 +1,4 @@
-/*import axios from "axios";
+import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { NavigateFunction, useLocation, useNavigate } from "react-router";
 import parserUrl from "../../../Helpers/parserUrl";
@@ -6,7 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import { TCategoryData, TSidebarData } from "../../types";
 
 
-
+/*
 // ?
 async function getCategories() {
   const { data } = await axios.get('http://localhost:5000/api/sidebar')
