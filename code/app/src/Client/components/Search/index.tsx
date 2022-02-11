@@ -16,15 +16,19 @@ export default function ({ text, onChangeInput }: TProps) {
       <FormControl
         value={text}
         onChange={onChangeInput}
-        placeholder="Text"
+        placeholder="Search"
         aria-label="Recipient's username"
         aria-describedby="basic-addon2"
       />
-      <Button 
+      {/*
+
+            <Button 
       variant="warning" 
       id="serach-send">
         Search
       </Button>
+    
+      */}
     </InputGroup>
   )
 }

@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { setTimeout } from "timers/promises";
 import Search from "../components/Search";
 
 
@@ -23,6 +24,18 @@ export default function () {
   const navigate = useNavigate()
 
   const [text, setText] = useState<string>('')
+
+
+
+  useMemo(() => {
+      if (text) {
+        navigate(`${location}text=${text}`)
+      } else {
+        navigate(location.slice(0, -2))
+      }
+  }, [text])
+
+
 
 
   const onChangeInput = handlerChangeInput(setText)

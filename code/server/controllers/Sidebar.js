@@ -10,15 +10,24 @@ class Controller {
     try {
       const { filters, text } = parserUrl(req)
 
-      console.log(text);
-
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
       const searchSlugs = filters && Object.values(filters).flat(1)
 
       const tagIDs = await Tag.find((!searchSlugs) ? {} : { slug: searchSlugs }, { _id: true })
 
-      const productTagIDs = await Product.find({ $and: [{title: { $regex: regex }}, {tagsID: { $in: tagIDs }}] }, { _id: false, tagsID: true })
+      //const productTagIDs = await Product.find({ $and: [{title: { $regex: regex }}, {tagsID: { $in: tagIDs }}] }, { _id: false, tagsID: true })
+
+
+      const productTagIDs = await Product.find({ 
+        $and: text !== undefined
+        ?
+        [ { title: { $regex: regex } }, {tagsID: { $in: tagIDs }}]
+        :
+        {tagsID: { $in: tagIDs }}
+
+      }, { _id: false, tagsID: true })
+
 
       const usedTagIDs =
         Object.values(
