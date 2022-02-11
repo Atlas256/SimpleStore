@@ -67,8 +67,9 @@ class Controller {
 
       const tagIDs = await Tag.find((!searchSlugs) ? {} : { slug: searchSlugs }, { _id: true })
 
-      const productTagIDs = await Product.find({ tagsID: { $in: tagIDs } }, { _id: false, tagsID: true })
 
+      const productTagIDs = await Product.find({ tagsID: { $in: tagIDs } }, { _id: false, tagsID: true })
+ 
       const usedTagIDs =
         Object.values(
           productTagIDs.flat(1)
@@ -81,8 +82,8 @@ class Controller {
               return acc
             }, {})
         )
-
-      const usedTags = await Tag.find({ _id: usedTagIDs }, { __v: false })
+ 
+      const usedTags = await Tag.find({ _id: usedTagIDs }, { __v: false });
 
       const usedTypesID =
         Object.values(
@@ -94,19 +95,30 @@ class Controller {
             .reduce((acc, id) => {
               acc[id] = id
               return acc
-            }, {}))
+            }, {}));
 
-      const usedTypes = await Type.find({ _id: usedTypesID }, { __v: false })
+      const usedTypes = await Type.find({ _id: usedTypesID }, { __v: false });
 
       
-      console.log(usedTags);
-      console.log(usedTypes);
+      //console.log(usedTags);
+      //console.log(usedTypes);
 
-      usedTypes.reduce((acc, type) => {
-        acc[type['_id']] = 
+      const filtersData = usedTags.reduce((acc, tag) => {
+        acc[tag.typeID] = {
+          ...acc[tag.typeID],
+          type: usedTypes.filter((type) => {
+            if (String(type._id) === String(tag.typeID)) {
+              return type
+            }
+          })[0],
+          tags: acc[tag.typeID] ? [...acc[tag.typeID]['tags'], tag] : [tag]
+          
+        } 
 
-        //return acc
+        return acc
       }, {})
+
+      //console.log(filtersData);
 
       res.status(200).json(Object.values(filtersData))
     } catch (error) {

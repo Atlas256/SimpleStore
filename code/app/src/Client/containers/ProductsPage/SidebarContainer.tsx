@@ -28,7 +28,7 @@ export default function () {
         getSidebarData(location).then((data) => {
             setSidebarData(data)
             console.log(data);
-            
+
         })
     }, [location])
 
@@ -36,9 +36,9 @@ export default function () {
         getSidebarData(location).then((data) => {
             setSidebarData(data)
             console.log(data);
-            
+
         })
-    }, [location, ])
+    }, [location])
 
     useEffect(() => {
         const parsedData = parserUrl(location)
@@ -54,9 +54,8 @@ export default function () {
                 }
                 return acc
             }, '')
-            if (filters['category']) {
-                navigate(newPath)
-            }
+            navigate(newPath)
+            console.log(newPath);
         }
     }, [filters])
 
