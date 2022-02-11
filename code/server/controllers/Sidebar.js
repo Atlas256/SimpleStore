@@ -8,13 +8,17 @@ class Controller {
 
   async getSidebarData(req, res) {
     try {
-      const parsedData = parserUrl(req)['filters']
+      const { filters, text } = parserUrl(req)
 
-      const searchSlugs = parsedData && Object.values(parsedData).flat(1)
+      console.log(text);
+
+      const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
+
+      const searchSlugs = filters && Object.values(filters).flat(1)
 
       const tagIDs = await Tag.find((!searchSlugs) ? {} : { slug: searchSlugs }, { _id: true })
 
-      const productTagIDs = await Product.find({ tagsID: { $in: tagIDs } }, { _id: false, tagsID: true })
+      const productTagIDs = await Product.find({ $and: [{title: { $regex: regex }}, {tagsID: { $in: tagIDs }}] }, { _id: false, tagsID: true })
 
       const usedTagIDs =
         Object.values(
