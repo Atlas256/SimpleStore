@@ -5,7 +5,7 @@ import { TFilter } from '../../containers/ProductsPage/SidebarContainer'
 
 
 const Body = styled.div`
-  width: 200px;
+  min-width: 200px;
   height: inherit;
   border-right: 1px solid #0004;
 
