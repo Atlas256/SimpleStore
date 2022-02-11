@@ -20,7 +20,7 @@ const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>
 
 export default function () {
 
-  const location = useLocation().pathname
+  let location = useLocation().pathname
   const navigate = useNavigate()
 
   const [text, setText] = useState<string>('')
@@ -28,11 +28,16 @@ export default function () {
 
 
   useMemo(() => {
-      if (text) {
+      /*if (text) {
         navigate(`${location}text=${text}`)
       } else {
         navigate(location.slice(0, -2))
-      }
+      }*/
+
+      let regex = new RegExp(`text=${text}`, 'gi')
+
+      location.replace(regex, '')
+      navigate(`${location}text=${text}`)
   }, [text])
 
 
