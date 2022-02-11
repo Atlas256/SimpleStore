@@ -8,7 +8,7 @@ class Controller {
 
   async getSidebarData(req, res) {
     try {
-      const { filters, text } = parserUrl(req)
+      const { filters, text='' } = parserUrl(req)
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
