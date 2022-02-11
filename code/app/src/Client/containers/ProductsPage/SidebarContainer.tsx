@@ -25,6 +25,7 @@ export default function () {
     const [sidebarData, setSidebarData] = useState<TSidebarData[]>([])
     const [filters, setFilters] = useState<TFilter>({})
 
+
     useMemo(() => {
         getSidebarData(path).then((data) => {
             setSidebarData(data)

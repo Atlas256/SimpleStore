@@ -46,7 +46,6 @@ class Controller {
       const usedTypes = await Type.find({ _id: usedTypesID }, { __v: false });
 
 
-      //UPPER CATEGORY
       const filtersData = Object.values(usedTags
         .reduce((acc, tag) => {
           acc[tag.typeID] = {
@@ -60,8 +59,6 @@ class Controller {
           }
           return acc
         }, {}))
-
-        
         .reduce((acc, item) => {
           if (item['type']['slug'] !== 'category') {
             acc = [...acc, item]

@@ -24,7 +24,10 @@ class Controller {
 
   async getFromParams(req, res) {
     try {
-      const { filters = {}, sort, page, category } = parserUrl(req)
+      const { filters = {}, sort, page, text } = parserUrl(req)
+
+      const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
+
 
       const roolesSearchIDs = [
         ...await Object.keys(filters).reduce(async (promiseAcc, typeSlug) => {
@@ -35,7 +38,13 @@ class Controller {
         }, [])
       ]
 
-      const searchProducts = await Model.find({ $and: roolesSearchIDs })
+      const searchProducts = await Model.find({
+        $and: text
+          ?
+          [...roolesSearchIDs, { title: { $regex: regex } }]
+          :
+          roolesSearchIDs
+      })
 
       res.status(200).json(searchProducts)
     } catch (error) {
@@ -47,7 +56,7 @@ class Controller {
     try {
 
       if (req.query.ids) {
-        const cartProducts = await Model.find({_id: {$in: req.query.ids}}, {__v: false})
+        const cartProducts = await Model.find({ _id: { $in: req.query.ids } }, { __v: false })
         res.status(200).json(cartProducts)
       } else {
         const cartProducts = await Model.find()
@@ -72,7 +81,7 @@ class Controller {
 
   async getOneFromSlug(req, res) {
     try {
-      const answer = await Model.findOne({slug: req.params.id})
+      const answer = await Model.findOne({ slug: req.params.id })
 
       res.status(200).json(answer)
     } catch (error) {
