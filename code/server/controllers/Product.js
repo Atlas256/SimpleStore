@@ -84,8 +84,11 @@ class Controller {
     try {
       const body = req.body
 
+      if (body.title) {
+        body.slug = titleToSlug(body.title)
+      }
 
-      if (req.files.image) {
+      if (req.files && req.files.image) {
         body.image = uploadImage(req)
       }
 
@@ -122,47 +125,10 @@ function getID(req, res) {
 
 export default new Controller()
 
-
 /*
-
         case 'cheap': res[key] = value; break;
         case 'expensive': res[key] = value; break;
         case 'popularity': res[key] = values; break;
         case 'action': res[key] = values; break;
         case 'rank':
-
-
-
-*/
-
-
-/*
-  async getFromParams(req, res) {
-    try {
-      let searchProducts = []
-      const { filters = {}, sort, page, category } = parserUrl(req)
-      const categoryID = await Tag.findOne({ slug: category }, { _id: true })
-
-      const searchIDs = await Object.keys(filters).reduce(async (promiseAcc, typeSlug) => {
-        const typeID = await Type.findOne({ slug: typeSlug }, { _id: true })
-        const tagsID = await Tag.find({ typeID: typeID, slug: filters[typeSlug] }, { _id: true })
-        const searchIDs = await promiseAcc
-        return [...searchIDs, ...tagsID]
-      }, [])
-
-
-      if (searchIDs.length === 0) {
-        searchProducts = await Model.find({ tagsID: { $all: categoryID } })
-      } else {
-        searchProducts = await Model.find({ tagsID: { $all: categoryID, $in: searchIDs } })
-      }
-
-      res.status(200).json(searchProducts)
-    } catch (error) {
-      res.status(500).json(error)
-    }
-  }
-
-
-
 */

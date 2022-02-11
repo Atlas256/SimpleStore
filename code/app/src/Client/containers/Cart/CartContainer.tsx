@@ -71,7 +71,7 @@ export default function ({ onShowCart }: TProps) {
   }, []);
 
   useEffect(() => {
-    console.log(cartStore);
+    //console.log(cartStore);
 
     if (cartStore) {
       axios.get(SERVER_URL + 'api/products', {

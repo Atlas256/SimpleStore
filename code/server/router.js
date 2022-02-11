@@ -4,11 +4,13 @@ import Type from './controllers/Type.js'
 import Tag from './controllers/Tag.js'
 import Product from './controllers/Product.js'
 import Sidebar from './controllers/Sidebar.js'
+import Search from './controllers/Search.js'
 
 const router = new Router()
 
 
-router.get('/sidebar/*', Sidebar.getSidebarData2)
+router.get('/sidebar/*', Sidebar.getSidebarData)
+router.get('/search/*', Search.getProducts)
 
 router.post('/users', Admin.create)
 router.get('/users', Admin.getAll)
@@ -42,63 +44,3 @@ router.delete('/products/:id', Product.delete)
 
 
 export default router;
-
-[
-  {
-      "type": {
-          "_id": "61f2cd7ff0c297e2f2dd9f29",
-          "title": "Категория",
-          "slug": "category"
-      },
-      "tags": [
-          {
-              "_id": "61fa7ba68caf52bd5bf20b7b",
-              "title": "BOOKS",
-              "slug": "books",
-              "typeID": "61f2cd7ff0c297e2f2dd9f29"
-          },
-          {
-              "_id": "61fa7bd48caf52bd5bf20b88",
-              "title": "PHONES",
-              "slug": "phones",
-              "typeID": "61f2cd7ff0c297e2f2dd9f29"
-          },
-          {
-              "_id": "62023a9e4f995879405e113e",
-              "title": "NOTEBOOKS",
-              "slug": "notebooks",
-              "typeID": "61f2cd7ff0c297e2f2dd9f29"
-          }
-      ]
-  }
-]
-
-[
-  {
-      "type": {
-          "_id": "61f2cd7ff0c297e2f2dd9f29",
-          "title": "Категория",
-          "slug": "category"
-      },
-      "tags": [
-          {
-              "_id": "61fa7ba68caf52bd5bf20b7b",
-              "title": "BOOKS",
-              "slug": "books",
-              "typeID": "61f2cd7ff0c297e2f2dd9f29"
-          },
-          {
-              "_id": "61fa7bd48caf52bd5bf20b88",
-              "title": "PHONES",
-              "slug": "phones",
-              "typeID": "61f2cd7ff0c297e2f2dd9f29"
-          },
-          {
-              "_id": "62023a9e4f995879405e113e",
-              "title": "NOTEBOOKS",
-              "slug": "notebooks",
-              "typeID": "61f2cd7ff0c297e2f2dd9f29"
-          }
-      ]
-  }
-]

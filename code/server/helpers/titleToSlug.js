@@ -1,3 +1,3 @@
 export function titleToSlug(str) {
-  return str.trim().toLowerCase().replace(/[^a-z0-9]/g, '_').split(' ').join('_')
+  return str.trim().toLowerCase().replace(/[^a-zа-я0-9]/g, '_').split(' ').join('_')
 }

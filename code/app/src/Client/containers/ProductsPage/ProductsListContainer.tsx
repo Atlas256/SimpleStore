@@ -6,20 +6,21 @@ import { TPropduct } from "../../types";
 
 
 
-async function getProducts(locationPath: string) {
-  const { data } = await axios.get(`http://localhost:5000/api${locationPath}`)
+async function getProducts(path: string) {
+  const { data } = await axios.get(`http://localhost:5000/api/products/${path}`)
   return data
 }
 
 
 export default function () {
 
-  const location = useLocation().pathname;
+  const location = useLocation().pathname
+  const path = location.replace('products', '').replace(/\//g, '')
 
   const [products, setProducts] = useState<TPropduct[]>([])
 
   useEffect(() => {
-    getProducts(location).then((products) => setProducts([...products]))
+    getProducts(path).then((products) => setProducts([...products]))
   }, [location])
 
 

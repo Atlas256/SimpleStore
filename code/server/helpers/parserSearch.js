@@ -1,10 +1,10 @@
-export default function (req) {
+export default function(req) {
   const str = req.params[0];
 
   const params = str
     .toLowerCase()
     .replace(/\//g, ';')
-    .replace(/[^a-zа-я0-9=;,_]/g, '')
+    .replace(/[^a-zа-я0-9=;,_ ]/g, '')
     .split(';')
 
   const data = params.reduce((res, item) => {
@@ -12,10 +12,8 @@ export default function (req) {
 
     switch (key) {
       case 'text': res[key] = value; break;
-      case 'page': res[key] = value; break;
-      case 'sort': res[key] = value; break;
       case '': break;
-      default: res['filters'] = { ...res['filters'], [key]: value.split(',') }
+      default: break;
     }
     return res;
   }, {})

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import parserUrl from "../../../Helpers/parserUrl"
 import Sidebar from "../../components/Sidebar"
@@ -9,56 +9,59 @@ export type TFilter = {
     [key: string]: string[]
 }
 
-async function getSidebarData(location: string) {
-    const { data } = await axios.get('http://localhost:5000/api/sidebar/' + location)
+async function getSidebarData(path: string) {
+    const { data } = await axios.get('http://localhost:5000/api/sidebar/' + path)
     return data
 }
 
 
 export default function () {
 
-    const location = useLocation().pathname.split('products')[1]
+    const location = useLocation().pathname
+    const path = location.replace('products', '').replace(/\//g, '')
     const navigate = useNavigate()
 
 
     const [sidebarData, setSidebarData] = useState<TSidebarData[]>([])
     const [filters, setFilters] = useState<TFilter>({})
 
-    useEffect(() => {
-        getSidebarData(location).then((data) => {
+    useMemo(() => {
+        getSidebarData(path).then((data) => {
             setSidebarData(data)
-            console.log(data);
-
         })
-    }, [location])
+        if (path) {
+            const parsedData = parserUrl(path)
+            setFilters({ ...parsedData['filters'] })
+        }
+    }, [])
 
-    useEffect(() => {
-        getSidebarData(location).then((data) => {
+    useMemo(() => {
+        getSidebarData(path).then((data) => {
             setSidebarData(data)
-            console.log(data);
-
         })
+        if (path) {
+            const parsedData = parserUrl(path)
+            setFilters({ ...parsedData['filters'] })
+        }
     }, [location])
 
-    useEffect(() => {
-        const parsedData = parserUrl(location)
-        //console.log(parsedData);
-        setFilters({ ...parsedData['filters'] })
-    }, [location])
+
 
     useEffect(() => {
-        if (filters) {
-            const newPath = Object.keys(filters).reduce((acc, typeName) => {
-                if (filters[typeName].join('')) {
-                    acc += typeName + '=' + filters[typeName].join(',') + ';'
-                }
-                return acc
-            }, '')
+
+        const newPath = Object.keys(filters).reduce((acc, typeName) => {
+            if (filters[typeName].join('')) {
+                acc += typeName + '=' + filters[typeName].join(',') + ';'
+            }
+            return acc
+        }, '')
+
+        if (newPath) {
             navigate(newPath)
-            console.log(newPath);
+        } else {
+            navigate('/products/')
         }
     }, [filters])
-
 
 
     const onClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => {
@@ -70,10 +73,13 @@ export default function () {
                 setFilters({ ...filters, [typeSlug]: [tagSlug] })
             }
         } else {
-            setFilters({ ...filters, [typeSlug]: filters[typeSlug].filter(item => item !== tagSlug) })
+            //if (filters[typeSlug].length > 1) {
+                setFilters({ ...filters, [typeSlug]: filters[typeSlug].filter(item => item !== tagSlug) })
+            //} else {
+                //setFilters({})
+            //}
         }
     }
-
 
 
     return (
