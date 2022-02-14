@@ -24,7 +24,7 @@ const TABLE_SECTION: TTableSection[] = [
   },
   {
     name: 'PASSWORD',
-    field: 'pass',
+    field: 'password',
     canSort: true
   },
 ]
@@ -40,7 +40,7 @@ const EDIT_SECTION: TEditSection[] = [
   },
   {
     name: 'PASSWORD',
-    field: 'pass'
+    field: 'password'
   }
 ]
 
