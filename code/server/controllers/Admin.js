@@ -79,7 +79,7 @@ function getID(req, res) {
   const { id } = req.params
 
   if (!id) {
-    res.status(400).json(error)
+    res.status(400).json({message: "ID not found!"})
   }
   return id
 }

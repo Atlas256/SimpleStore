@@ -5,9 +5,10 @@ import Tag from './controllers/Tag.js'
 import Product from './controllers/Product.js'
 import Sidebar from './controllers/Sidebar.js'
 import Search from './controllers/Search.js'
-import { body } from 'express-validator';
+
 import emailValidator from './validators/emailValidator.js'
 import passwordValidator from './validators/passwordValidator.js'
+import errorMiddlevare from './validators/errorMiddlevare.js'
 
 
 
@@ -21,10 +22,12 @@ router.get('/search/*', Search.getProducts)
 router.post('/users',
   emailValidator,
   passwordValidator,
+  errorMiddlevare,
   Admin.create)
 router.put('/users/id/:id',
   emailValidator,
   passwordValidator,
+  errorMiddlevare,
   Admin.update)
 router.get('/users', Admin.getAll)
 router.get('/users/*', Admin.getFromParams)
