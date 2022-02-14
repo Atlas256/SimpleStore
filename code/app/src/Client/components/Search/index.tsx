@@ -8,7 +8,7 @@ type TProps = {
   onClickSend: () => void
 }
 
-export default function ({ text, onChangeInput }: TProps) {
+export default function ({ text, onChangeInput, onClickSend }: TProps) {
 
 
   return (
@@ -20,15 +20,12 @@ export default function ({ text, onChangeInput }: TProps) {
         aria-label="Recipient's username"
         aria-describedby="basic-addon2"
       />
-      {/*
-
-            <Button 
-      variant="warning" 
-      id="serach-send">
+      <Button
+        onClick={onClickSend}
+        variant="warning"
+        id="serach-send">
         Search
       </Button>
-    
-      */}
     </InputGroup>
   )
 }

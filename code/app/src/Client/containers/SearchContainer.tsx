@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
-import { setTimeout } from "timers/promises";
+import { NavigateFunction, useLocation, useNavigate } from "react-router";
 import Search from "../components/Search";
 
 
-const handlerClickSend = () => () => {
-
-
+const handlerClickSend = (text: string, location: string, navigate: NavigateFunction) => () => {
+  if (!location.includes('products')) {
+    navigate(`/products/text=${text}`)
+  } else {
+    navigate(`${location}text=${text}`)
+  }
 }
 
 const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>>) => (event: React.ChangeEvent<any>) => {
@@ -20,7 +22,7 @@ const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>
 
 export default function () {
 
-  let location = useLocation().pathname
+  const location = useLocation().pathname
   const navigate = useNavigate()
 
   const [text, setText] = useState<string>('')
@@ -28,24 +30,20 @@ export default function () {
 
 
   useMemo(() => {
-      /*if (text) {
-        navigate(`${location}text=${text}`)
-      } else {
-        navigate(location.slice(0, -2))
-      }*/
-
-      let regex = new RegExp(`text=${text}`, 'gi')
-
-      location.replace(regex, '')
+    if (!location.includes('products')) {
+      navigate(`/products/text=${text}`)
+    } else {
       navigate(`${location}text=${text}`)
+    }
   }, [text])
 
 
-
+  
+const onClickSend = handlerClickSend(text, location, navigate)
 
   const onChangeInput = handlerChangeInput(setText)
 
   return (
-    <Search text={text} onChangeInput={onChangeInput} onClickSend={handlerClickSend} />
+    <Search text={text} onChangeInput={onChangeInput} onClickSend={onClickSend} />
   )
 }
