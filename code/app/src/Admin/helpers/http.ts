@@ -2,7 +2,7 @@ import axios from "axios";
 import { TItem } from "../types";
 
 export const saveItem = (URL_PATH: string, ID: string, editItem: TItem) => {
-  axios.put(`http://localhost:5000/api/${URL_PATH}/${ID}`, editItem)
+  axios.put(`http://localhost:5000/api/${URL_PATH}/id/${ID}`, editItem)
     .then(function (response) {
       console.log(response);
     })
@@ -22,7 +22,7 @@ export const createItem = (URL_PATH: string, editItem: TItem) => {
 }
 
 export const deleteItem = (URL_PATH: string, ID: string) => {
-  axios.delete(`http://localhost:5000/api/${URL_PATH}/${ID}`)
+  axios.delete(`http://localhost:5000/api/${URL_PATH}/id/${ID}`)
     .then(function (response) {
       console.log(response);
     })
