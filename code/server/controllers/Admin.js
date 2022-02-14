@@ -1,6 +1,5 @@
 import parserUrl from '../helpers/parserUrl.js';
 import Admin from '../models/Admin.js'
-import { validationResult } from 'express-validator';
 
 
 const LIMIT = 8;
@@ -8,14 +7,6 @@ const LIMIT = 8;
 class Controller {
   async create(req, res) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          success: false,
-          errors: errors.array()
-        });
-      }
-
       const body = req.body
       const answer = await Admin.create(body)
 
