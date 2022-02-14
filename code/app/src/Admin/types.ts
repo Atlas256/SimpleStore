@@ -16,3 +16,8 @@ export type TEditSection = {
   name: string,
   field: string
 }
+
+export type TCardSection = {
+  name: string,
+  field: string
+}

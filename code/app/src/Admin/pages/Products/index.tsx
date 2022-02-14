@@ -1,29 +1,26 @@
-import TableContainer from '../../containers/TableContainer'
-import { TEditSection, TTableSection } from '../../types'
+import CardListContainer from '../../containers/CardListContainer'
+import { TCardSection, TEditSection, TTableSection } from '../../types'
 
 
 
 const PATH = 'products'
 
-const TABLE_SECTION: TTableSection[] = [
+const CARD_SECTION: TCardSection[] = [
   {
     name: 'ID',
     field: '_id',
-    canSort: false
   },
   {
     name: 'TITLE',
-    field: 'title',
-    canSort: true
+    field: 'title'
   },
   {
     name: 'SLUG',
     field: 'slug',
-    canSort: true
   }
 ]
 
-const EDIT_SECTION: TEditSection[] = [
+const EDIT_SECTION: any[] = [
   {
     name: 'TITLE',
     field: 'title'
@@ -39,7 +36,8 @@ export default function () {
         PRODUCTS
       </div>
 
-      <TableContainer URL_PATH={PATH} TABLE_SECTION={TABLE_SECTION} EDIT_SECTION={EDIT_SECTION}/>
+
+      <CardListContainer CARD_SECTION={CARD_SECTION}/>
     </>
   )
 }
