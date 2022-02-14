@@ -12,22 +12,23 @@ const CardBody = styled.div`
 
 type TProps = {
   CARD_SECTION: TCardSection[]
-  item: TItem
+  item: { [key: string]: any }
 }
 
 
-export default function({CARD_SECTION, item}: TProps) {
+export default function ({ CARD_SECTION, item }: TProps) {
 
-  return(
+  return (
     <div>
       {
-        CARD_SECTION.map((section) => 
-        <div key={item._id}>
-          <div>{item[section.name]}</div>
-          <div>{item[section.field]}</div>
-        </div>
+        CARD_SECTION.map((section: { [key: string]: string }) =>
+          <div key={item._id}>
+            <div>{item[section['field']]}</div>
+            <br />
+          </div>
         )
       }
+      <hr />
     </div>
   )
 }
