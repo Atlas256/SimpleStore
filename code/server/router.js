@@ -5,6 +5,8 @@ import Tag from './controllers/Tag.js'
 import Product from './controllers/Product.js'
 import Sidebar from './controllers/Sidebar.js'
 import Search from './controllers/Search.js'
+import { body } from 'express-validator';
+
 
 const router = new Router()
 
@@ -12,7 +14,13 @@ const router = new Router()
 router.get('/sidebar/*', Sidebar.getSidebarData)
 router.get('/search/*', Search.getProducts)
 
-router.post('/users', Admin.create)
+router.post('/users',
+  body('email').isEmail().normalizeEmail(),
+  body('password').isLength({
+    min: 6
+  }), 
+  Admin.create)
+
 router.get('/users', Admin.getAll)
 router.get('/users/*', Admin.getFromParams)
 router.get('/users/:id', Admin.getOne)
