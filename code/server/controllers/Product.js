@@ -37,14 +37,34 @@ class Controller {
           return [...searchIDs, { tagsID: { $in: tagsID } }]
         }, [])
       ]
+      //!-------------------
+      const TYPES = await Type.find({ slug: { $in: Object.keys(filters).flat(1) } })
+      const TAGS = await Tag.find({ slug: { $in: Object.values(filters).flat(1) } })
+
+      const _ROOLES = TAGS.reduce((ROOLES, TAG) => {
+        if (TYPES.some(type => String(type._id) === String(TAG['typeID']))) {
+          const KEY = String(TAG['typeID'])
+          ROOLES[KEY] = ROOLES[KEY] ? [...ROOLES[KEY], TAG['_id']] : [TAG['_id']]
+        }
+        return ROOLES
+      }, {})
+
+      const ROOLES = Object.values(_ROOLES).reduce((acc, item) => {
+        acc = [...acc, { tagsID: { $in: item } }]
+        return acc;
+      }, [])
+      //!-------------------
 
       const searchProducts = await Model.find({
         $and: text
           ?
-          [...roolesSearchIDs, { title: { $regex: regex } }]
+          [...ROOLES, { title: { $regex: regex } }]
           :
-          roolesSearchIDs
+          ROOLES
       })
+
+      //console.log(roolesSearchIDs);
+      //console.log(ROOLES);
 
       res.status(200).json(searchProducts)
     } catch (error) {

@@ -31,48 +31,78 @@ const CartBody = styled.div`
   flex-direction: column;
 `
 
+const Title = styled.div`
+  font-size: 32px;
+`
+
+const TotalPrice = styled.div`
+  font-size: 20px;
+`
 
 
-const handlerClickCheckout = (navigate: NavigateFunction) => () => {
-  navigate('/checkout')
-}
+
+
 
 
 
 type TProps = {
   cartStore: { [key: string]: any }
   cartProducts: TPropduct[]
+  totalPrice: number
   onShowCart: (isShow: boolean) => () => void
   onAppendCount: (_id: string) => () => void
   onSubtractCount: (_id: string) => () => void
+  onRemoveItem: (_id: string) => () => void
+  onClickCheckout: () => void
 }
 
-export default function ({ cartStore, cartProducts, onShowCart, onAppendCount, onSubtractCount }: TProps) {
+export default function ({
+  cartStore,
+  cartProducts,
+  totalPrice,
+  onShowCart,
+  onAppendCount,
+  onSubtractCount,
+  onRemoveItem,
+  onClickCheckout
+}: TProps) {
 
-  const navigate = useNavigate()
 
-
-
-  const onClickCheckout = handlerClickCheckout(navigate)
 
   return (
     <CartPage>
       <CartBody>
-        <div style={{fontSize: '20px'}}>
+        <Title>
           КОРЗИНА
-        </div>
+        </Title>
+        {
+          <TotalPrice>Total price: {totalPrice} грн</TotalPrice>
+        }
         <ListGroup style={{ overflowY: 'scroll' }}>
           {
-            cartProducts.map((product) => 
-            cartStore[product._id] &&
+            cartProducts.map((product) =>
+              cartStore[product._id] &&
               <ListGroup.Item key={product._id}>
                 <div style={{ display: 'flex' }}>
                   <div style={{ width: '100px', height: '100px' }}>
                     <img style={{ width: '100%', height: '100%', objectFit: 'contain' }} src={SERVER_URL + product.image} alt="" />
                   </div>
-                  <div style={{marginLeft: '10px'}}>
+                  <div style={{ marginLeft: '10px' }}>
                     <div>{product.title}</div>
-                    <div>{product.price}</div>
+                    {
+                      !product.discount
+                        ?
+                        <div>{product.price} грн</div>
+                        :
+                        <div>
+                          <div style={{ textDecoration: 'line-through' }}>{product.price} грн</div>
+                          <div style={{ color: 'red' }}>{product.price - product.discount} грн</div>
+                        </div>
+                    }
+                    <Button
+                      variant='warning'
+                      onClick={onRemoveItem(product._id)}
+                    >REMOVE</Button>
                   </div>
                   <div style={{ marginLeft: 'auto', display: 'flex' }}>
                     <div>
@@ -80,7 +110,7 @@ export default function ({ cartStore, cartProducts, onShowCart, onAppendCount, o
                         style={{ width: '100%' }}
                         onClick={onSubtractCount(String(product._id))}
                       >-</Button>
-                      <div>{cartStore[product._id]['count']}</div>
+                      <div style={{ display: 'flex', justifyContent: 'center' }}>{cartStore[product._id]['count']}</div>
                       <Button
                         style={{ width: '100%' }}
                         onClick={onAppendCount(String(product._id))}
@@ -92,14 +122,18 @@ export default function ({ cartStore, cartProducts, onShowCart, onAppendCount, o
             )
           }
         </ListGroup>
-        <div style={{ marginTop: 'auto' }}>
+        <div style={{ width: '100%', marginTop: 'auto' }}>
           <Button
+            style={{ width: '100%' }}
             variant="outline-primary"
             onClick={onClickCheckout}
           >ОФОРМИТЬ ЗАКАЗ</Button>
           <Button
+            style={{ width: '100%' }}
             variant="outline-warning"
-            onClick={onShowCart(false)}>ПРОДОЛЖИТЬ ПОКУПКИ</Button>
+            onClick={onShowCart(false)}
+          >ПРОДОЛЖИТЬ ПОКУПКИ
+          </Button>
         </div>
       </CartBody>
     </CartPage>

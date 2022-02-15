@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router";
 
 import Cart from "../../components/Cart";
 import { TPropduct } from "../../types";
@@ -23,21 +24,15 @@ type TCartProduct = {
 
 
 const changeCartCount = (setCartStore: React.Dispatch<React.SetStateAction<TCartStore>>, _id: string, number: number) => {
-  if (localStorage.getItem("addedProducts")) {
-    setCartStore(
-      (prev: TCartStore) => {
-        let count = prev[_id]['count']
-
-        if ((count + number) >= 1 && (count + number) <= 9) {
-          count += number;
-        }
-
-        const newState = { ...prev, [_id]: { ['count']: count } }
-        localStorage.setItem('addedProducts', JSON.stringify(newState))
-        return newState
+  setCartStore(
+    (prev: TCartStore) => {
+      let count = prev[_id]['count']
+      if ((count + number) >= 1 && (count + number) <= 20) {
+        count += number;
       }
-    )
-  }
+      return { ...prev, [_id]: { ['count']: count } }
+    }
+  )
 }
 
 const handlerAppendCount = (setCartStore: React.Dispatch<React.SetStateAction<TCartStore>>) => (_id: string) => () => {
@@ -48,6 +43,16 @@ const handlerSubtractCount = (setCartStore: React.Dispatch<React.SetStateAction<
   changeCartCount(setCartStore, _id, -1)
 }
 
+const handlerRemoveItem = (setCartStore: React.Dispatch<React.SetStateAction<TCartStore>>) => (_id: string) => () => {
+  setCartStore((prev: TCartStore) => {
+    delete prev[_id]
+    return { ...prev }
+  })
+}
+
+const handlerClickCheckout = (navigate: NavigateFunction) => () => {
+  navigate('/checkout')
+}
 
 
 
@@ -58,11 +63,14 @@ type TProps = {
 
 export default function ({ onShowCart }: TProps) {
 
+  const navigate = useNavigate()
+
   const [cartStore, setCartStore] = useState<TCartStore>({})
   const [cartProducts, setCartProducts] = useState<TPropduct[]>([])
+  const [totalPrice, setTotalPrice] = useState<number>(0)
 
 
-  useEffect(() => {
+  useMemo(() => {
     if (localStorage.getItem("addedProducts")) {
       setCartStore({
         ...JSON.parse(String(localStorage.getItem("addedProducts")))
@@ -71,8 +79,6 @@ export default function ({ onShowCart }: TProps) {
   }, []);
 
   useEffect(() => {
-    //console.log(cartStore);
-
     if (cartStore) {
       axios.get(SERVER_URL + 'api/products', {
         params: {
@@ -84,10 +90,27 @@ export default function ({ onShowCart }: TProps) {
     }
   }, [cartStore])
 
+  useMemo(() => {
+    if (cartProducts.length !== 0) {
+      setTotalPrice(cartProducts.reduce((acc, product) => acc + product.price * (cartStore[product._id] && cartStore[product._id]['count']), 0))
+    } else {
+      setTotalPrice(0)
+    }
+  }, [cartProducts])
+
+  useMemo(() => {
+    if (localStorage.getItem("addedProducts")) {
+      localStorage.setItem('addedProducts', JSON.stringify(cartStore))
+    }
+  }, [cartStore])
+
 
 
   const onAppendCount = handlerAppendCount(setCartStore)
   const onSubtractCount = handlerSubtractCount(setCartStore)
+  const onRemoveItem = handlerRemoveItem(setCartStore)
+  const onClickCheckout = handlerClickCheckout(navigate)
+
 
 
 
@@ -95,9 +118,12 @@ export default function ({ onShowCart }: TProps) {
     <Cart
       cartStore={cartStore}
       cartProducts={cartProducts}
+      totalPrice={totalPrice}
       onShowCart={onShowCart}
       onAppendCount={onAppendCount}
       onSubtractCount={onSubtractCount}
+      onRemoveItem={onRemoveItem}
+      onClickCheckout={onClickCheckout}
     />
   )
 }

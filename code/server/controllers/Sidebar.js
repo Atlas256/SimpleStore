@@ -8,26 +8,43 @@ class Controller {
 
   async getSidebarData(req, res) {
     try {
-      const { filters, text='' } = parserUrl(req)
+      const { filters, text = '' } = parserUrl(req)
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
-      const searchSlugs = filters && Object.values(filters).flat(1)
+      //todo---1---
 
-      const tagIDs = await Tag.find((!searchSlugs) ? {} : { slug: searchSlugs }, { _id: true })
+      const TYPES = await Type.find({ slug: { $in: Object.keys(filters).flat(1) } })
+      const TAGS = await Tag.find({ slug: { $in: Object.values(filters).flat(1) } })
 
-      //const productTagIDs = await Product.find({ $and: [{title: { $regex: regex }}, {tagsID: { $in: tagIDs }}] }, { _id: false, tagsID: true })
+      const _ROOLES = TAGS.reduce((ROOLES, TAG) => {
+        if (TYPES.some(type => String(type._id) === String(TAG['typeID']))) {
+          const KEY = String(TAG['typeID'])
+          ROOLES[KEY] = ROOLES[KEY] ? [...ROOLES[KEY], TAG['_id']] : [TAG['_id']]
+        }
+        return ROOLES
+      }, {})
 
+      const ROOLES = Object.values(_ROOLES).reduce((acc, item) => {
+        acc = [...acc, { tagsID: { $in: item } }]
+        return acc;
+      }, [])
+
+      console.log(ROOLES);
 
       const productTagIDs = await Product.find({ 
         $and: text !== undefined
         ?
-        [ { title: { $regex: regex } }, {tagsID: { $in: tagIDs }}]
+        [ { title: { $regex: regex } }, ...ROOLES]
         :
-        {tagsID: { $in: tagIDs }}
+        ROOLES
 
       }, { _id: false, tagsID: true })
 
+
+      console.log(productTagIDs);
+
+      //todo---2---
 
       const usedTagIDs =
         Object.values(
