@@ -24,7 +24,7 @@ class Controller {
 
   async getFromParams(req, res) {
     try {
-      const { filters = {}, sort, page, text } = parserUrl(req)
+      const { filters = {}, sort, page, text = '' } = parserUrl(req)
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
@@ -56,15 +56,12 @@ class Controller {
       //!-------------------
 
       const searchProducts = await Model.find({
-        $and: text
+        $and: text !== undefined
           ?
           [...ROOLES, { title: { $regex: regex } }]
           :
           ROOLES
       })
-
-      //console.log(roolesSearchIDs);
-      //console.log(ROOLES);
 
       res.status(200).json(searchProducts)
     } catch (error) {

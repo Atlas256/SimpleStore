@@ -12,10 +12,13 @@ class Controller {
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
+      const searchSlugTypes = filters && Object.keys(filters).flat(1)
+      const searchSlugTags = filters && Object.values(filters).flat(1)
+
       //todo---1---
 
-      const TYPES = await Type.find({ slug: { $in: Object.keys(filters).flat(1) } })
-      const TAGS = await Tag.find({ slug: { $in: Object.values(filters).flat(1) } })
+      const TYPES = await Type.find((!searchSlugTypes) ? {} : { slug: searchSlugTypes })
+      const TAGS = await Tag.find((!searchSlugTags) ? {} : { slug: searchSlugTags })
 
       const _ROOLES = TAGS.reduce((ROOLES, TAG) => {
         if (TYPES.some(type => String(type._id) === String(TAG['typeID']))) {
@@ -30,19 +33,19 @@ class Controller {
         return acc;
       }, [])
 
-      console.log(ROOLES);
-
-      const productTagIDs = await Product.find({ 
-        $and: text !== undefined
+      const productTagIDs = filters
         ?
-        [ { title: { $regex: regex } }, ...ROOLES]
+        await Product.find(
+          {
+            $and: text !== undefined
+              ?
+              [...ROOLES, { title: { $regex: regex } }]
+              :
+              ROOLES
+          }, { _id: false, tagsID: true })
         :
-        ROOLES
-
-      }, { _id: false, tagsID: true })
-
-
-      console.log(productTagIDs);
+        await Product.find(
+          text !== undefined ? { title: { $regex: regex } } : {}, { _id: false, tagsID: true })
 
       //todo---2---
 
@@ -97,6 +100,7 @@ class Controller {
           }
           return acc
         }, [])
+
 
 
       res.status(200).json(filtersData)
