@@ -25,9 +25,15 @@ class Controller {
 
   async getAll(req, res) {
     try {
-      const answer = await Model.find()
+      if (req.query.ids) {
 
-      res.status(200).json(answer)
+        const tags = await Model.find({ _id: { $in: req.query.ids } }, { __v: false })
+        res.status(200).json(tags)
+      } else {
+        const tags = await Model.find()
+        res.status(200).json(tags)
+      }
+
     } catch (error) {
       res.status(500).json(error)
     }

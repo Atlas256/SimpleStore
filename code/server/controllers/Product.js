@@ -55,8 +55,6 @@ class Controller {
   async getAll(req, res) {
     try {
 
-      //const A = undefined.field;//! ВАНЯ ШОТО НАПИСАЛ НУЖНО ЧЕКНУТЬ
-
       if (req.query.ids) {
         const cartProducts = await Model.find({ _id: { $in: req.query.ids } }, { __v: false })
         res.status(200).json(cartProducts)

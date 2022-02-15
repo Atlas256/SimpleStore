@@ -11,7 +11,9 @@ import passwordValidator from '../validators/passwordValidator.js'
 import errorMiddlevare from '../validators/errorMiddlevare.js'
 
 
-//TODO ROUTERS + MIDDLEVARE + VALIDATION + ERROR + CONTROLLER
+//TODO   PATH VALIDATION MIDDLEVARE ERROR CONTROLLER
+//?      const A = undefined.field;
+
 
 
 const router = new Router()
@@ -45,12 +47,12 @@ router.put('/types/id/:id', Type.update)
 router.delete('/types/id/:id', Type.delete)
 
 //! TAGS
-router.post('/tags', Tag.create)
-router.get('/tags', Tag.getAll)
-router.get('/tags/*', Tag.getFromParams)
 router.get('/tags/id/:id', Tag.getOne)
 router.put('/tags/id/:id', Tag.update)
 router.delete('/tags/id/:id', Tag.delete)
+router.post('/tags', Tag.create)
+router.get('/tags', Tag.getAll)
+router.get('/tags/*', Tag.getFromParams)
 
 //! PRODUCTS
 router.get('/products/slug/:id', Product.getOneFromSlug)
