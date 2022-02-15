@@ -18,7 +18,7 @@ class Controller {
 
   async getAll(req, res) {
     try {
-      const answer = await Admin.find().limit(LIMIT)
+      const answer = await Admin.find()
       res.status(200).json(answer)
     } catch (error) {
       res.status(500).json(error)

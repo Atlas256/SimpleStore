@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 import TableContainer from '../../containers/TableContainer'
 import { TEditSection, TTableSection } from '../../types'
@@ -46,6 +48,11 @@ const EDIT_SECTION: TEditSection[] = [
 
 
 export default function () {
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate('./page=1')
+  }, [])
 
   return (
     <>

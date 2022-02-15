@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import { NavigateFunction, useLocation, useNavigate } from 'react-router'
 import styled from 'styled-components'
@@ -41,12 +41,12 @@ type TProps = {
 
 export default function ({ pageCount, onClickCreate }: TProps) {
 
+  const location = useLocation().pathname
   const navigate = useNavigate()
 
   const buttonList = useMemo(() =>
     createButtonList(pageCount, navigate)
     , [pageCount])
-
 
 
   return (
