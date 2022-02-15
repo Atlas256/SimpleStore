@@ -35,7 +35,7 @@ export default function ({CARD_SECTION}: TProps) {
 
 
   return (
-    <div>
+    <div style={{overflowY: 'scroll'}}>
       {
         items && items.map((item: TItem) =>
           <Card item={item} CARD_SECTION={CARD_SECTION}/>

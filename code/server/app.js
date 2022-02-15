@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import fileUploader from 'express-fileupload'
 import path from 'path'
-import router from './router.js'
+import router from './Routes/router.js'
 import dotenv from 'dotenv'
 dotenv.config()
 

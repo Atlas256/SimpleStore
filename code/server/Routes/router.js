@@ -1,15 +1,17 @@
 import Router from 'express'
-import Admin from './controllers/Admin.js'
-import Type from './controllers/Type.js'
-import Tag from './controllers/Tag.js'
-import Product from './controllers/Product.js'
-import Sidebar from './controllers/Sidebar.js'
-import Search from './controllers/Search.js'
+import Admin from '../controllers/Admin.js'
+import Type from '../controllers/Type.js'
+import Tag from '../controllers/Tag.js'
+import Product from '../controllers/Product.js'
+import Sidebar from '../controllers/Sidebar.js'
+import Search from '../controllers/Search.js'
 
-import emailValidator from './validators/emailValidator.js'
-import passwordValidator from './validators/passwordValidator.js'
-import errorMiddlevare from './validators/errorMiddlevare.js'
+import emailValidator from '../validators/emailValidator.js'
+import passwordValidator from '../validators/passwordValidator.js'
+import errorMiddlevare from '../validators/errorMiddlevare.js'
 
+
+//TODO ROUTERS + MIDDLEVARE + VALIDATION + ERROR + CONTROLLER
 
 
 const router = new Router()

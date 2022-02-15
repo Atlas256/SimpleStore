@@ -37,6 +37,7 @@ class Controller {
     try {
       const params = parserUrl(req);
       const PAGE = params.page - 1;
+
       const answer = await Model.find().skip(LIMIT * PAGE).limit(LIMIT).sort({ title: 1 })
 
       res.status(200).json(answer)

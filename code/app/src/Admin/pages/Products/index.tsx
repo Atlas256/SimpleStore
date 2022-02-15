@@ -17,6 +17,22 @@ const CARD_SECTION: TCardSection[] = [
   {
     name: 'SLUG',
     field: 'slug',
+  },
+  {
+    name: 'PRICE',
+    field: 'price',
+  },
+  {
+    name: 'DISCOUNT',
+    field: 'discount'
+  },
+  {
+    name: 'CREATE',
+    field: 'createdDate',
+  },
+  {
+    name: 'UPDATE',
+    field: 'updatedDate',
   }
 ]
 

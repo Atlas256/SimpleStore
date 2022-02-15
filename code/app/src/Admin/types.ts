@@ -3,7 +3,7 @@
 
 export type TItem = {
   _id?: string
-  [key: string]: unknown
+  [key: string]: any
 }
 
 export type TTableSection = {

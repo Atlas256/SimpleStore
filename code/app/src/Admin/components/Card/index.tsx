@@ -5,30 +5,45 @@ import { TCardSection, TItem } from '../../types'
 
 const CardBody = styled.div`
   width: 100%;
-
   padding: 1rem;
+`
+
+const Field = styled.div`
+  width: 100%;
+  display: flex;
+`
+
+const FieldName = styled.div`
+  min-width: 15%;
+`
+
+const FieldData = styled.div`
+  width: 100%;
+  display: flex;
 `
 
 
 type TProps = {
   CARD_SECTION: TCardSection[]
-  item: { [key: string]: any }
+  item: TItem
 }
 
 
 export default function ({ CARD_SECTION, item }: TProps) {
 
   return (
-    <div>
+    <CardBody>
       {
-        CARD_SECTION.map((section: { [key: string]: string }) =>
-          <div key={item._id}>
-            <div>{item[section['field']]}</div>
-            <br />
-          </div>
+        CARD_SECTION.map((section) =>
+          <Field 
+          key={item._id}
+          >
+            <FieldName>{section.name}</FieldName>
+            <FieldData>{item[section.field]}</FieldData>
+          </Field>
         )
       }
       <hr />
-    </div>
+    </CardBody>
   )
 }
