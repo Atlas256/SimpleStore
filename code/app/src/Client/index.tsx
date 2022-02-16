@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import CheckoutPage from './pages/CheckoutPage';
 import { useLocation } from 'react-router';
 import OnePageContainer from './containers/OnePage/OnePageContainer';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 
 const Wrapper = styled.div` 
@@ -34,7 +36,13 @@ export default function () {
 
   const onShowCart = handlerShowCart(setIsShowCart)
 
+
+
+
+
+
   return (
+    <Provider store={store}>
     <Wrapper>
       <HeaderContainer onShowCart={onShowCart}/>
       <div style={{overflow: 'hidden', height: '100%'}}>
@@ -49,5 +57,6 @@ export default function () {
         isShowCart && <CartContainer onShowCart={onShowCart} />
       }
     </Wrapper>
+    </Provider>
   )
 }

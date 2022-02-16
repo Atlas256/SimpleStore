@@ -1,23 +1,43 @@
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import ButtonsList from "../../components/ButtonsList";
 
 
 
 
-type TProps = {
-  pageCount: number
+const handlerOnClick = (setCurrentPage: React.Dispatch<React.SetStateAction<number>>) => (number: number) => () => {
+  setCurrentPage(number)
 }
 
 
-export default function({pageCount}: TProps) {
+type TProps = {
+  pagesCount: number
+}
+
+
+export default function({pagesCount}: TProps) {
 
   const location = useLocation().pathname
   const navigate = useNavigate()
 
 
+  const [currentPage, setCurrentPage] = useState<number>(0)
+
+
+  const onClick = handlerOnClick(setCurrentPage)
+
+
+  useEffect(() => {
+    console.log(currentPage);
+  }, [currentPage])
 
 
   return(
-    <ButtonsList pageCount={pageCount} callback={(idx) => console.log(idx)} />
+    <ButtonsList 
+    pagesCount={pagesCount} 
+    currentPage={currentPage} 
+    setCurrentPage={setCurrentPage} 
+    onClick={onClick}
+    />
   )
 }

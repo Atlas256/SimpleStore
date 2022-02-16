@@ -1,46 +1,35 @@
-import { useEffect, useMemo, useState } from "react";
-import { NavigateFunction, useLocation, useNavigate } from "react-router";
+import { useState } from "react";
+import { Dispatch } from "redux";
 import Search from "../components/Search";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { TAction } from "../store/reducers/mainReducer";
 
 
-const handlerClickSend = (text: string, location: string, navigate: NavigateFunction) => () => {
-  if (!location.includes('products')) {
-    navigate(`/products/text=${text}`)
-  } else {
-    navigate(`${location}text=${text}`)
-  }
+
+
+
+const handlerClickSend = (text: string, mainReducer: {[key: string]: string | number}, dispatch: Dispatch<TAction>) => () => {
+  dispatch({ type: "CHANGE", payload: { ...mainReducer, ['text']: text } })
 }
 
 const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>>) => (event: React.ChangeEvent<any>) => {
-
   const text = event.target.value;
-
   setText(text)
 }
 
 
 
-
 export default function () {
-
-  const location = useLocation().pathname
-  const navigate = useNavigate()
 
   const [text, setText] = useState<string>('')
 
+  const mainReducer = useAppSelector(store => store.mainReducer)
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    if (!location.includes('products')) {
-      navigate(`/products/text=${text}`);
-    } else {
-      navigate(`${location}text=${text}`)
-    }
-  }, [text])
-
-
-  const onClickSend = handlerClickSend(text, location, navigate)
 
   const onChangeInput = handlerChangeInput(setText)
+  const onClickSend = handlerClickSend(text, mainReducer, dispatch)
+
 
   return (
     <Search text={text} onChangeInput={onChangeInput} onClickSend={onClickSend} />

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import PageButtons from "../../components/ButtonsList";
 import ProductsList from "../../components/ProductsList";
 import { TPropduct } from "../../types";
 import ButtonsListContainer from "./ButtonsListContainer";
@@ -21,12 +20,13 @@ export default function () {
   const location = useLocation().pathname
   const path = location.replace('products', '').replace(/\//g, '')
 
-  const [pageCount, setPageCount] = useState<number>(10)
+  const [pagesCount, setPagesCount] = useState<number>(1)
   const [products, setProducts] = useState<TPropduct[]>([])
 
   useEffect(() => {
     getProducts(path).then((data) => {
       setProducts([...data.products])
+      setPagesCount(data.pagesCount)
     })
   }, [location])
 
@@ -34,7 +34,7 @@ export default function () {
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <ProductsList products={products} />
-      <ButtonsListContainer pageCount={pageCount} />
+      <ButtonsListContainer pagesCount={pagesCount} />
     </div>
   )
 }

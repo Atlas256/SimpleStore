@@ -1,4 +1,4 @@
-import { NavigateFunction, useNavigate } from 'react-router'
+import { NavigateFunction, useLocation, useNavigate } from 'react-router'
 import styled from 'styled-components'
 import SearchContainer from '../../containers/SearchContainer'
 
@@ -37,9 +37,15 @@ export default function ({ onShowCart }: TProps) {
   const onClick = handlerClick(navigate)
 
 
+
   return (
     <Header>
-      <div style={{ cursor: 'pointer' }} onClick={onClick}>HOME</div>
+      <div
+        style={{ cursor: 'pointer' }}
+        onClick={onClick}
+      >
+        HOME
+      </div>
       <div style={{ margin: '0rem 1rem' }}>
         <SearchContainer />
       </div>

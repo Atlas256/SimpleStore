@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import ProductsListContainer from '../../containers/ProductsPage/ProductsListContainer'
-import SidebarContainer from '../../containers/ProductsPage/SidebarContainer'
+import PageContainer from '../../containers/ProductsPage/PageContainer'
 
 
 
@@ -17,8 +16,7 @@ export default function () {
 
   return (
     <Page>
-      <SidebarContainer />
-      <ProductsListContainer />
+      <PageContainer />
     </Page>
   )
 }

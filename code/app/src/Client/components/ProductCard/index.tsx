@@ -52,7 +52,15 @@ export default function ({ product }: TProps) {
   return (
     <Card
       key={product._id}
-      style={{ width: '14rem', height: '24rem', margin: '0.5rem', paddingTop: '10px', overflow: 'hidden', position: 'relative' }}>
+      style={{ 
+        width: '14rem', 
+        height: '24rem', 
+        margin: '0.5rem', 
+        paddingTop: '10px', 
+        overflow: 'hidden', 
+        position: 'relative'
+         }}
+         >
       <Image
         onClick={onClick(product.slug)}
         width={'100%'}

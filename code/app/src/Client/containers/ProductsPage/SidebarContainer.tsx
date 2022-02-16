@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import parserUrl from "../../../Helpers/parserUrl"
 import Sidebar from "../../components/Sidebar"
+import { useAppSelector } from "../../hooks/redux"
 import { TSidebarData } from "../../types"
 
 
@@ -24,8 +25,8 @@ async function getSidebarData(path: string) {
 
 export default function () {
 
-    const location = useLocation().pathname
-    const path = location.replace('products', '').replace(/\//g, '')
+    const location = decodeURI( useLocation().pathname )
+    const path = location.replace('products', '').replace(/\//g, '') 
     const navigate = useNavigate()
 
 
@@ -33,23 +34,7 @@ export default function () {
     const [filters, setFilters] = useState<TFilter>({})
 
 
-
-    useEffect(() => {
-
-        const newPath = Object.keys(filters).reduce((acc, typeName) => {
-            if (filters[typeName].join('')) {
-                acc += typeName + '=' + filters[typeName].join(',') + ';'
-            }
-            return acc
-        }, '')
-
-        if (newPath) {
-            navigate(newPath)
-        } else {
-            navigate(`/products/`)
-        }
-    }, [filters])
-
+    const mainReducer = useAppSelector(store => store.mainReducer)
 
     useMemo(() => {
         getSidebarData(path).then((data) => {
@@ -71,8 +56,29 @@ export default function () {
         }
     }, [location])
 
+    useMemo(() => {
 
-    
+        let newPath = Object.keys(filters).reduce((acc, typeName) => {
+            if (filters[typeName].join('')) {
+                acc += typeName + '=' + filters[typeName].join(',') + ';'
+            }
+            return acc
+        }, '')
+
+
+        if (mainReducer.text) {
+            newPath += `text=${mainReducer.text}`
+        }
+
+        if (newPath) {
+            navigate('./'+newPath)
+        } else {
+            navigate('/products/')
+        }
+    }, [filters, mainReducer.text])
+
+
+
 
     const onClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => {
         if (e.target.checked) {

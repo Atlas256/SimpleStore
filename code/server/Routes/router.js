@@ -59,8 +59,10 @@ router.get('/products/id/:id', Product.getOne)
 router.put('/products/id/:id', Product.update)
 router.delete('/products/id/:id', Product.delete)
 router.post('/products', Product.create)
+
 router.get('/products', Product.getAll)
 router.get('/products/*', Product.getFromParams)
+
 
 
 

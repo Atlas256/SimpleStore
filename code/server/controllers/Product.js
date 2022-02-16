@@ -71,10 +71,6 @@ class Controller {
 
       const products = searchProducts.slice((page-1)*LIMIT, (page-1)*LIMIT+LIMIT)
 
-      console.log('pageCount:', pagesCount);
-      console.log('page:', page );
-
-      console.log(products);
 
       res.status(200).json({pagesCount, products})
     } catch (error) {
@@ -84,14 +80,14 @@ class Controller {
 
   async getAll(req, res) {
     try {
-      let { page=1 } = parserUrl(req)
 
       const allProducts = await Model.find({}, {__v: false})
-      const products = allProducts.slice((page-1)*LIMIT, (page-1)*LIMIT+LIMIT)
+      const products = allProducts.slice(0, LIMIT)
       
       const pagesCount = Math.ceil( allProducts.length / LIMIT );
 
-
+      console.log(pagesCount);
+      
       res.status(200).json({pagesCount, products})
     } catch (error) {
       res.status(500).json(error)
