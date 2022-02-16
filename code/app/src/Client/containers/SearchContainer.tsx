@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavigateFunction, useLocation, useNavigate } from "react-router";
 import Search from "../components/Search";
 
@@ -20,6 +20,7 @@ const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>
 
 
 
+
 export default function () {
 
   const location = useLocation().pathname
@@ -29,17 +30,19 @@ export default function () {
 
 
 
-  useMemo(() => {
+  useEffect(() => {
+
     if (!location.includes('products')) {
-      navigate(`/products/text=${text}`)
+      navigate(`/products/text=${text}`);
     } else {
       navigate(`${location}text=${text}`)
     }
+
   }, [text])
 
 
-  
-const onClickSend = handlerClickSend(text, location, navigate)
+
+  const onClickSend = handlerClickSend(text, location, navigate)
 
   const onChangeInput = handlerChangeInput(setText)
 

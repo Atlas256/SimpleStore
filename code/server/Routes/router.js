@@ -4,7 +4,6 @@ import Type from '../controllers/Type.js'
 import Tag from '../controllers/Tag.js'
 import Product from '../controllers/Product.js'
 import Sidebar from '../controllers/Sidebar.js'
-import Search from '../controllers/Search.js'
 
 import emailValidator from '../validators/emailValidator.js'
 import passwordValidator from '../validators/passwordValidator.js'
@@ -20,7 +19,6 @@ const router = new Router()
 
 //! OTHERS
 router.get('/sidebar/*', Sidebar.getSidebarData)
-router.get('/search/*', Search.getProducts)
 
 //! USERS
 router.post('/users',

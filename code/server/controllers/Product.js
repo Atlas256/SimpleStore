@@ -6,6 +6,7 @@ import parserUrl from '../helpers/parserUrl.js'
 import { uploadImage } from '../helpers/imageUploader.js'
 
 
+
 class Controller {
   async create(req, res) {
     try {
@@ -22,22 +23,20 @@ class Controller {
     }
   }
 
+
   async getFromParams(req, res) {
     try {
-      const { filters = {}, sort, page, text = '' } = parserUrl(req)
+      let { filters = {}, sort, page, text='' } = parserUrl(req)
+
+      if (!/^[а-я]/.test(text.toString(16))) {
+        this.text = text.toString(16)
+      } 
+
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
-
-      const roolesSearchIDs = [
-        ...await Object.keys(filters).reduce(async (promiseAcc, typeSlug) => {
-          const typeID = await Type.findOne({ slug: typeSlug }, { _id: true })
-          const tagsID = await Tag.find({ typeID: typeID, slug: filters[typeSlug] }, { _id: true })
-          const searchIDs = await promiseAcc
-          return [...searchIDs, { tagsID: { $in: tagsID } }]
-        }, [])
-      ]
       //!-------------------
+
       const TYPES = await Type.find({ slug: { $in: Object.keys(filters).flat(1) } })
       const TAGS = await Tag.find({ slug: { $in: Object.values(filters).flat(1) } })
 
@@ -53,6 +52,7 @@ class Controller {
         acc = [...acc, { tagsID: { $in: item } }]
         return acc;
       }, [])
+      
       //!-------------------
 
       const searchProducts = await Model.find({
