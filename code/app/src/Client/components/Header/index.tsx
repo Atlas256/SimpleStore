@@ -36,6 +36,7 @@ export default function ({ onShowCart }: TProps) {
   const navigate = useNavigate()
   const onClick = handlerClick(navigate)
 
+
   return (
     <Header>
       <div style={{ cursor: 'pointer' }} onClick={onClick}>HOME</div>

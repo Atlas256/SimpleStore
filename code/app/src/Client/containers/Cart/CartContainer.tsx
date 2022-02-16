@@ -80,7 +80,7 @@ export default function ({ onShowCart }: TProps) {
 
   useEffect(() => {
     if (cartStore) {
-      axios.get(SERVER_URL + 'api/products', {
+      axios.get(SERVER_URL + 'api/products/ids', {
         params: {
           ids: Object.keys(cartStore)
         }

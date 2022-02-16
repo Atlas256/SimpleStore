@@ -6,6 +6,10 @@ import parserUrl from '../helpers/parserUrl.js'
 import { uploadImage } from '../helpers/imageUploader.js'
 
 
+const LIMIT = 4
+
+
+
 
 class Controller {
   async create(req, res) {
@@ -26,12 +30,12 @@ class Controller {
 
   async getFromParams(req, res) {
     try {
-      let { filters = {}, sort, page, text='' } = parserUrl(req)
-
+      let { filters = {}, sort, page=1, text='' } = parserUrl(req)
+/*
       if (!/^[а-я]/.test(text.toString(16))) {
         this.text = text.toString(16)
       } 
-
+*/
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
@@ -63,7 +67,16 @@ class Controller {
           ROOLES
       })
 
-      res.status(200).json(searchProducts)
+      const pagesCount = Math.ceil( searchProducts.length / LIMIT );
+
+      const products = searchProducts.slice((page-1)*LIMIT, (page-1)*LIMIT+LIMIT)
+
+      console.log('pageCount:', pagesCount);
+      console.log('page:', page );
+
+      console.log(products);
+
+      res.status(200).json({pagesCount, products})
     } catch (error) {
       res.status(500).json(error)
     }
@@ -71,18 +84,31 @@ class Controller {
 
   async getAll(req, res) {
     try {
+      let { page=1 } = parserUrl(req)
 
-      if (req.query.ids) {
-        const cartProducts = await Model.find({ _id: { $in: req.query.ids } }, { __v: false })
-        res.status(200).json(cartProducts)
-      } else {
-        const cartProducts = await Model.find()
-        res.status(200).json(cartProducts)
-      }
+      const allProducts = await Model.find({}, {__v: false})
+      const products = allProducts.slice((page-1)*LIMIT, (page-1)*LIMIT+LIMIT)
+      
+      const pagesCount = Math.ceil( allProducts.length / LIMIT );
 
+
+      res.status(200).json({pagesCount, products})
     } catch (error) {
       res.status(500).json(error)
     }
+  }
+
+  async getFromIDs(req, res) {
+    try {
+
+      if (req.query.ids) {
+        const products = await Model.find({ _id: { $in: req.query.ids } }, { __v: false })
+        res.status(200).json(products)
+      }
+    } catch (error) {
+      res.status(500).json(error)
+    }
+    
   }
 
   async getOne(req, res) {

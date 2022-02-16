@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Accordion, Form } from 'react-bootstrap'
-import { TSidebarData, TTag } from '../../types'
-import { TFilter } from '../../containers/ProductsPage/SidebarContainer'
+import { TSidebarData, TTag } from '../../types';
+import { TFilter } from '../../containers/ProductsPage/SidebarContainer';
+
+
 
 
 const Body = styled.div`

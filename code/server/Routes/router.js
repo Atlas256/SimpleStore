@@ -54,6 +54,7 @@ router.get('/tags/*', Tag.getFromParams)
 
 //! PRODUCTS
 router.get('/products/slug/:id', Product.getOneFromSlug)
+router.get('/products/ids', Product.getFromIDs)
 router.get('/products/id/:id', Product.getOne)
 router.put('/products/id/:id', Product.update)
 router.delete('/products/id/:id', Product.delete)

@@ -29,17 +29,13 @@ export default function () {
   const [text, setText] = useState<string>('')
 
 
-
   useEffect(() => {
-
     if (!location.includes('products')) {
       navigate(`/products/text=${text}`);
     } else {
       navigate(`${location}text=${text}`)
     }
-
   }, [text])
-
 
 
   const onClickSend = handlerClickSend(text, location, navigate)
