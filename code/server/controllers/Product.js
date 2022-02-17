@@ -31,11 +31,6 @@ class Controller {
   async getFromParams(req, res) {
     try {
       let { filters = {}, sort, page=1, text='' } = parserUrl(req)
-/*
-      if (!/^[а-я]/.test(text.toString(16))) {
-        this.text = text.toString(16)
-      } 
-*/
 
       const regex = new RegExp(`${text}`.replace('_', ' '), 'i')
 
@@ -86,8 +81,6 @@ class Controller {
       
       const pagesCount = Math.ceil( allProducts.length / LIMIT );
 
-      console.log(pagesCount);
-      
       res.status(200).json({pagesCount, products})
     } catch (error) {
       res.status(500).json(error)

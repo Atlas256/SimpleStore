@@ -3,7 +3,7 @@ export default function (str: string) {
   const params = str
     .toLowerCase()
     .replace(/\//g, ';')
-    .replace(/[^a-z0-9=;,_]/g, '')
+    .replace(/[^a-zа-я0-9=;,_]/g, '')
     .split(';')
 
   const data = params.reduce((res: any, item) => {
@@ -11,7 +11,7 @@ export default function (str: string) {
 
     switch (key) {
       case 'text': res[key] = value; break;
-      case 'page': res[key] = value; break;
+      case 'page': res[key] = +value; break;
       case 'sort': res[key] = value; break;
       case '': break;
       default: res['filters'] = { ...res['filters'], [key]: value.split(',') }

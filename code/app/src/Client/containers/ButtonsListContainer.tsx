@@ -21,10 +21,6 @@ export default function({pagesCount}: TProps) {
   const dispatch = useAppDispatch()
 
 
-  useEffect(() => {
-    console.log(page);
-  }, [page])
-
 
   const onClick = handlerOnClick(dispatch)
 

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router";
 import { Dispatch } from "redux";
 import Search from "../components/Search";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -22,9 +23,23 @@ const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>
 
 export default function () {
 
+  const location = useLocation().pathname
+
+
+  const mainReducer = useAppSelector(store => store.mainReducer)
+  const dispatch = useAppDispatch()
+
   const [text, setText] = useState<string>('')
 
-  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (location === '/') {
+      setText('')
+    } else {
+      setText(mainReducer.text)
+    }
+  }, [mainReducer, location])
+
 
   const onChangeInput = handlerChangeInput(setText)
   const onClickSend = handlerClickSend(text, dispatch)

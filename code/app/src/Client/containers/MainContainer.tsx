@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { Route, Routes, useLocation, useNavigate } from "react-router"
 import parserUrl from "../../Helpers/parserUrl"
 import { useAppDispatch, useAppSelector } from "../hooks/redux"
@@ -17,45 +17,64 @@ export default function () {
   const navigate = useNavigate()
 
 
-  const { page, text, filters } = useAppSelector(store => store.mainReducer)
+  const mainReducer = useAppSelector(store => store.mainReducer)
+  const { text, page, filters } = mainReducer;
   const dispatch = useAppDispatch()
 
-
-  
   //GET DATA
-  useMemo(() => {
+
+  useEffect(() => {
     if (path) {
-      const parsedData = parserUrl(path)
+      const parsedData = parserUrl(decodeURI(path))
+
+      if (!parsedData.filters) {
+        parsedData['filters'] = {}
+      }
+      if (!parsedData.page) {
+        parsedData['page'] = undefined
+      }
+      if (!parsedData.text) {
+        parsedData[''] = ''
+      }
       dispatch({
         type: "CHANGE_ALL",
         payload: parsedData
       })
     }
-  }, [])
+  }, [path])
+
 
   //PUSH DATA
   useMemo(() => {
-    let newPath = Object.keys(filters).reduce((acc, typeName) => {
-      if (filters[typeName].join('')) {
+
+    let newPath = ''
+
+    if (text) {
+      newPath += `text=${text};`;
+    }
+    if (page) {
+      newPath += `page=${page};`;
+    }
+//!!!
+    newPath += filters && Object.keys(filters).reduce((acc, typeName) => {
+      if (filters[typeName].join('').length) {
         acc += typeName + '=' + filters[typeName].join(',') + ';'
       }
       return acc
     }, '')
 
-    if (text) {
-      newPath += `text=${text};`;
-    }
+    //todo newPath = newPath.replace('undefined', '')
+//!!!
 
-    if (page !== undefined) {
-      newPath += `page=${page};`;
-    }
 
-    if (newPath) {
-      navigate('/products/' + newPath)
+    if (JSON.stringify(mainReducer) !== JSON.stringify({})) {
+      navigate(`/products/${newPath}`)
     } else {
-      navigate('/products/')
+      navigate('/')
     }
-  }, [filters, text, page])
+
+  }, [mainReducer])
+
 
 
   return (

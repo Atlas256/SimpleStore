@@ -11,15 +11,15 @@ type TFilter = {
 }
 
 type TReducer = {
-  page: number | undefined,
-  text: string | undefined,
-  filters: TFilter
+  page?: number | undefined,
+  text?: string | undefined,
+  filters?: TFilter
 }
 
 
 const defaultState: TReducer = {
-  page: undefined,
-  text: undefined,
+  page: 0,
+  text: '',
   filters: {}
 }
 
@@ -30,7 +30,9 @@ export function mainReducer(state = defaultState, action: TAction) {
   switch (action.type) {
 
     case ('CHANGE_ALL'):
-      return { ...action.payload }
+      return { ...state, ...action.payload }
+    case ('REMOVE_ALL'):
+      return {}
 
     case ('CHANGE_PAGE'):
       return { ...state, ['page']: action.payload }

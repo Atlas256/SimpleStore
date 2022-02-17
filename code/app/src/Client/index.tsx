@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import PagesContainer from './containers/PagesContainer';
+import PagesContainer from './containers/MainContainer';
 
 
 const Wrapper = styled.div` 

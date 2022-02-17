@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import PageContainer from '../../containers/PagesContainer'
+import PageContainer from '../../containers/MainContainer'
 import ProductsListContainer from '../../containers/ProductsPage/ProductsListContainer'
 import SidebarContainer from '../../containers/ProductsPage/SidebarContainer'
 
