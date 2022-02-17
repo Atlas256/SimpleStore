@@ -1,10 +1,6 @@
-import { NavigateFunction, useLocation, useNavigate } from 'react-router'
-import { Dispatch } from 'redux'
+import { NavigateFunction, useNavigate } from 'react-router'
 import styled from 'styled-components'
 import SearchContainer from '../../containers/SearchContainer'
-import { useAppDispatch } from '../../hooks/redux'
-import { TAction } from '../../store/reducers/mainReducer'
-
 
 
 const Header = styled.div` 

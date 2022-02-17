@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react"
 import { Route, Routes, useLocation, useNavigate } from "react-router"
-import parserUrl from "../../Helpers/parserUrl"
 import { useAppDispatch, useAppSelector } from "../hooks/redux"
+import parserUrl from "../../Helpers/parserUrl"
 import CheckoutPage from "../pages/CheckoutPage"
 import MainPage from "../pages/MainPage"
 import ProductsPage from "../pages/ProductsPage"
@@ -22,19 +22,12 @@ export default function () {
   const dispatch = useAppDispatch()
 
   //GET DATA
-
   useEffect(() => {
     if (path) {
       const parsedData = parserUrl(decodeURI(path))
 
       if (!parsedData.filters) {
         parsedData['filters'] = {}
-      }
-      if (!parsedData.page) {
-        parsedData['page'] = undefined
-      }
-      if (!parsedData.text) {
-        parsedData[''] = ''
       }
       dispatch({
         type: "CHANGE_ALL",
@@ -46,35 +39,22 @@ export default function () {
 
   //PUSH DATA
   useMemo(() => {
-
     let newPath = ''
-
-    if (text) {
-      newPath += `text=${text};`;
-    }
-    if (page) {
-      newPath += `page=${page};`;
-    }
-//!!!
-    newPath += filters && Object.keys(filters).reduce((acc, typeName) => {
+    newPath += text ? `text=${text};` : '';
+    newPath += page ? `page=${page};` : '';
+    newPath += filters ? Object.keys(filters).reduce((acc, typeName) => {
       if (filters[typeName].join('').length) {
         acc += typeName + '=' + filters[typeName].join(',') + ';'
       }
       return acc
-    }, '')
-
-    //todo newPath = newPath.replace('undefined', '')
-//!!!
-
+    }, '') : ''
 
     if (JSON.stringify(mainReducer) !== JSON.stringify({})) {
       navigate(`/products/${newPath}`)
     } else {
       navigate('/')
     }
-
   }, [mainReducer])
-
 
 
   return (

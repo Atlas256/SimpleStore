@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
-import { useLocation } from 'react-router';
-import styled from 'styled-components'
-import parserUrl from '../../../Helpers/parserUrl';
+import styled from 'styled-components';
 import NewsGoods from '../../components/Novelty';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
@@ -24,7 +22,6 @@ const Page = styled.div`
 export default function () {
 
   const dispatch = useAppDispatch()
-  const mainReducer = useAppSelector(store => store.mainReducer)
 
   useMemo(() => {
     dispatch({
@@ -32,7 +29,6 @@ export default function () {
       payload: {}
     })
   }, [])
-
 
 
   return (
