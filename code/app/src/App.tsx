@@ -4,7 +4,10 @@ import Router from './Router';
 
 const AppRoot = createGlobalStyle`
   * {
-    font-family: 'Roboto', sans-serif;
+    //font-family: 'Roboto', sans-serif;
+    //font-family: 'Nuito', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+
   }
 
   a {

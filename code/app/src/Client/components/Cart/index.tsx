@@ -1,5 +1,4 @@
 import { Button, ListGroup } from 'react-bootstrap'
-import { NavigateFunction, useNavigate } from 'react-router'
 import styled from 'styled-components'
 import { TPropduct } from '../../types'
 
@@ -16,27 +15,33 @@ const CartPage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  padding: 4rem;
+  display: flex;
+  z-index: 10000;
+
+  justify-content: right;
 `
 
 const CartBody = styled.div`
-  width: 100%;
+  max-width: 500px;
+  min-width: 500px;
   height: 100%;
 
   background: #FFF;
-  border-radius: 10px;
-  padding: 1rem;
 
   display: flex;
   flex-direction: column;
 `
 
 const Title = styled.div`
+  background: #27F;
+  font-weight: bold;
   font-size: 32px;
+  color: #FFF;
+  padding: 2rem 1rem;
 `
 
 const TotalPrice = styled.div`
-  font-size: 20px;
+  font-size: 24px;
 `
 
 
@@ -73,11 +78,8 @@ export default function ({
     <CartPage>
       <CartBody>
         <Title>
-          КОРЗИНА
+          Cart
         </Title>
-        {
-          <TotalPrice>Total price: {totalPrice ? totalPrice : 0} грн</TotalPrice>
-        }
         <ListGroup style={{ overflowY: 'scroll' }}>
           {
             cartProducts.map((product) =>
@@ -123,6 +125,9 @@ export default function ({
           }
         </ListGroup>
         <div style={{ width: '100%', marginTop: 'auto' }}>
+        {
+          <TotalPrice>Total price: {totalPrice ? totalPrice : 0} грн</TotalPrice>
+        }
           <Button
             style={{ width: '100%' }}
             variant="outline-primary"
