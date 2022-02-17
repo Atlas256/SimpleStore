@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useMemo, useState } from "react"
 import { useLocation } from "react-router"
-import parserUrl from "../../../Helpers/parserUrl"
 import Sidebar from "../../components/Sidebar"
 import { useAppDispatch, useAppSelector } from "../../hooks/redux"
 import { TSidebarData } from "../../types"
@@ -28,7 +27,7 @@ export default function () {
     const [sidebarData, setSidebarData] = useState<TSidebarData[]>([])
 
 
-    const filters = useAppSelector(store => store.filtersReducer)
+    const { filters } = useAppSelector(store => store.mainReducer)
     const dispatch = useAppDispatch()
 
 
@@ -36,26 +35,12 @@ export default function () {
         getSidebarData(path).then((data) => {
             setSidebarData(data)
         })
-        if (path) {
-            const parsedData = parserUrl(path)
-            dispatch({
-                type: "CHANGE_FILTERS",  
-                payload: parsedData['filters'] 
-            })
-        }
     }, [])
 
     useMemo(() => {
         getSidebarData(path).then((data) => {
             setSidebarData(data)
         })
-        if (path) {
-            const parsedData = parserUrl(path)
-            dispatch({
-                type: "CHANGE_FILTERS", 
-                payload: parsedData['filters'] 
-            })
-        }
     }, [location])
 
 

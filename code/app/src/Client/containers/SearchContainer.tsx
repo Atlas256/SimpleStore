@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useState } from "react";
 import { Dispatch } from "redux";
 import Search from "../components/Search";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { TAction } from "../store/reducers/mainReducer";
+
 
 
 
