@@ -1,6 +1,10 @@
-import { NavigateFunction, useNavigate } from 'react-router'
+import { NavigateFunction, useLocation, useNavigate } from 'react-router'
+import { Dispatch } from 'redux'
 import styled from 'styled-components'
 import SearchContainer from '../../containers/SearchContainer'
+import { useAppDispatch } from '../../hooks/redux'
+import { TAction } from '../../store/reducers/mainReducer'
+
 
 
 const Header = styled.div` 
@@ -21,7 +25,11 @@ const Header = styled.div`
 `
 
 
-const handlerClick = (navigate: NavigateFunction) => () => {
+const handlerClick = (navigate: NavigateFunction, dispatch: Dispatch<TAction>) => () => {
+  dispatch({
+    type: "REMOVE_ALL",
+    payload: {}
+  })
   navigate('/')
 }
 
@@ -33,7 +41,10 @@ export default function ({ onShowCart }: TProps) {
 
   const navigate = useNavigate()
 
-  const onClick = handlerClick(navigate)
+  const dispatch = useAppDispatch()
+
+  const onClick = handlerClick(navigate, dispatch)
+
 
 
 

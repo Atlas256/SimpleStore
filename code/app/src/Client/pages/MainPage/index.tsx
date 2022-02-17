@@ -1,8 +1,5 @@
-import { useMemo } from 'react';
 import styled from 'styled-components';
 import NewsGoods from '../../components/Novelty';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-
 
 
 const Page = styled.div`
@@ -20,16 +17,6 @@ const Page = styled.div`
 
 
 export default function () {
-
-  const dispatch = useAppDispatch()
-
-  useMemo(() => {
-    dispatch({
-      type: "REMOVE_ALL",
-      payload: {}
-    })
-  }, [])
-
 
   return (
     <Page>

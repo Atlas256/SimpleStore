@@ -38,7 +38,7 @@ export default function () {
 
 
   //PUSH DATA
-  useMemo(() => {
+  useEffect(() => {
     let newPath = ''
     newPath += text ? `text=${text};` : '';
     newPath += page ? `page=${page};` : '';
