@@ -1,16 +1,11 @@
 import styled from 'styled-components'
 import HeaderContainer from './containers/HeaderContainer'
-import { Route, Routes } from "react-router-dom";
-import ProductsPage from './pages/ProductsPage';
-import MainPage from './pages/MainPage';
 import CartContainer from './containers/Cart/CartContainer';
 import { useEffect, useState } from 'react';
-import CheckoutPage from './pages/CheckoutPage';
 import { useLocation } from 'react-router';
-import OnePageContainer from './containers/OnePage/OnePageContainer';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import SearchPage from './pages/SearchPage';
+import PagesContainer from './containers/PagesContainer';
 
 
 const Wrapper = styled.div` 
@@ -38,23 +33,11 @@ export default function () {
   const onShowCart = handlerShowCart(setIsShowCart)
 
 
-
-
-
-
   return (
     <Provider store={store}>
     <Wrapper>
       <HeaderContainer onShowCart={onShowCart}/>
-      <div style={{overflow: 'hidden', height: '100%'}}>
-        <Routes>
-          <Route path="" element={<MainPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/products/*" element={<ProductsPage />} />
-          <Route path="/product/*" element={<OnePageContainer />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Routes>
-      </div>
+      <PagesContainer />
       {
         isShowCart && <CartContainer onShowCart={onShowCart} />
       }

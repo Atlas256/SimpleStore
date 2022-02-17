@@ -76,7 +76,7 @@ export default function ({
           КОРЗИНА
         </Title>
         {
-          <TotalPrice>Total price: {totalPrice} грн</TotalPrice>
+          <TotalPrice>Total price: {totalPrice ? totalPrice : 0} грн</TotalPrice>
         }
         <ListGroup style={{ overflowY: 'scroll' }}>
           {

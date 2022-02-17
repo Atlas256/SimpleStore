@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import ProductsList from "../../components/ProductsList";
 import { TPropduct } from "../../types";
-import ButtonsListContainer from "./ButtonsListContainer";
+import ButtonsListContainer from "../ButtonsListContainer";
 
 
 

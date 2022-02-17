@@ -76,7 +76,7 @@ export default function ({ onShowCart }: TProps) {
         ...JSON.parse(String(localStorage.getItem("addedProducts")))
       })
     }
-  }, []);
+  }, [cartProducts]);
 
   useEffect(() => {
     if (cartStore) {
@@ -90,7 +90,7 @@ export default function ({ onShowCart }: TProps) {
     }
   }, [cartStore])
 
-  useMemo(() => {
+  useEffect(() => {
     if (cartProducts.length !== 0) {
       setTotalPrice(cartProducts.reduce((acc, product) => acc + product.price * (cartStore[product._id] && cartStore[product._id]['count']), 0))
     } else {
@@ -103,6 +103,8 @@ export default function ({ onShowCart }: TProps) {
       localStorage.setItem('addedProducts', JSON.stringify(cartStore))
     }
   }, [cartStore])
+
+
 
 
 
