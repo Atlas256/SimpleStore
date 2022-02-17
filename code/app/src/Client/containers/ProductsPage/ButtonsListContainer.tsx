@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
 import ButtonsList from "../../components/ButtonsList";
 
 
@@ -17,12 +16,7 @@ type TProps = {
 
 export default function({pagesCount}: TProps) {
 
-  const location = useLocation().pathname
-  const navigate = useNavigate()
-
-
   const [currentPage, setCurrentPage] = useState<number>(0)
-
 
   const onClick = handlerOnClick(setCurrentPage)
 

@@ -10,6 +10,7 @@ import { useLocation } from 'react-router';
 import OnePageContainer from './containers/OnePage/OnePageContainer';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import SearchPage from './pages/SearchPage';
 
 
 const Wrapper = styled.div` 
@@ -51,6 +52,7 @@ export default function () {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/products/*" element={<ProductsPage />} />
           <Route path="/product/*" element={<OnePageContainer />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </div>
       {

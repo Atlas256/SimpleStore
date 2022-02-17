@@ -22,8 +22,8 @@ export function mainReducer(state = defaultState, action: TAction) {
 
 
   switch (action.type) {
-    case ('CHANGE'):
-      return {...action.payload}
+    case ('CHANGE_TEXT'):
+      return {...state, ['text']: action.payload}
 
     default:
       return state

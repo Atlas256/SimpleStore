@@ -13,17 +13,28 @@ export default function () {
   const navigate = useNavigate()
 
 
+  const filters = useAppSelector(store => store.filtersReducer)
   const mainReducer = useAppSelector(store => store.mainReducer)
 
+
   useMemo(() => {
-    console.log(123);
-    
+    let newPath = Object.keys(filters).reduce((acc, typeName) => {
+        if (filters[typeName].join('')) {
+            acc += typeName + '=' + filters[typeName].join(',') + ';'
+        }
+        return acc
+    }, '')
+
     if (mainReducer.text) {
-      navigate(`./text=${mainReducer.text}`)
-    } else {
-      navigate('/products/')
+      newPath += `text=${mainReducer.text}`;
     }
-  }, [mainReducer.text])
+
+    if (newPath) {
+        navigate('./' + newPath)
+    } else {
+        navigate('/products/')
+    }
+}, [filters, mainReducer])
 
 
   return (

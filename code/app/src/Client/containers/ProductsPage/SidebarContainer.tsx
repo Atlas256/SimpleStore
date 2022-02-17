@@ -1,9 +1,9 @@
 import axios from "axios"
-import { useEffect, useMemo, useState } from "react"
-import { useLocation, useNavigate } from "react-router"
+import { useMemo, useState } from "react"
+import { useLocation } from "react-router"
 import parserUrl from "../../../Helpers/parserUrl"
 import Sidebar from "../../components/Sidebar"
-import { useAppSelector } from "../../hooks/redux"
+import { useAppDispatch, useAppSelector } from "../../hooks/redux"
 import { TSidebarData } from "../../types"
 
 
@@ -11,8 +11,7 @@ import { TSidebarData } from "../../types"
 
 export type TFilter = {
     [key: string]: string[]
-  }
-  
+}
 
 
 async function getSidebarData(path: string) {
@@ -21,20 +20,17 @@ async function getSidebarData(path: string) {
 }
 
 
-
-
 export default function () {
 
-    const location = decodeURI( useLocation().pathname )
-    const path = location.replace('products', '').replace(/\//g, '') 
-    const navigate = useNavigate()
-
+    const location = decodeURI(useLocation().pathname)
+    const path = location.replace('products', '').replace(/\//g, '')
 
     const [sidebarData, setSidebarData] = useState<TSidebarData[]>([])
-    const [filters, setFilters] = useState<TFilter>({})
 
 
-    const mainReducer = useAppSelector(store => store.mainReducer)
+    const filters = useAppSelector(store => store.filtersReducer)
+    const dispatch = useAppDispatch()
+
 
     useMemo(() => {
         getSidebarData(path).then((data) => {
@@ -42,7 +38,10 @@ export default function () {
         })
         if (path) {
             const parsedData = parserUrl(path)
-            setFilters({ ...parsedData['filters'] })
+            dispatch({
+                type: "CHANGE_FILTERS",  
+                payload: parsedData['filters'] 
+            })
         }
     }, [])
 
@@ -52,43 +51,33 @@ export default function () {
         })
         if (path) {
             const parsedData = parserUrl(path)
-            setFilters({ ...parsedData['filters'] })
+            dispatch({
+                type: "CHANGE_FILTERS", 
+                payload: parsedData['filters'] 
+            })
         }
     }, [location])
-
-    useMemo(() => {
-
-        let newPath = Object.keys(filters).reduce((acc, typeName) => {
-            if (filters[typeName].join('')) {
-                acc += typeName + '=' + filters[typeName].join(',') + ';'
-            }
-            return acc
-        }, '')
-
-
-        if (mainReducer.text) {
-            newPath += `text=${mainReducer.text}`
-        }
-
-        if (newPath) {
-            navigate('./'+newPath)
-        } else {
-            navigate('/products/')
-        }
-    }, [filters, mainReducer.text])
-
 
 
 
     const onClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>, typeSlug: string, tagSlug: string) => {
         if (e.target.checked) {
             if (filters[typeSlug]) {
-                setFilters({ ...filters, [typeSlug]: [...filters[typeSlug], tagSlug] })
+                dispatch({
+                    type: "CHANGE_FILTERS", 
+                    payload: { ...filters, [typeSlug]: [...filters[typeSlug], tagSlug] }
+                })
             } else {
-                setFilters({ ...filters, [typeSlug]: [tagSlug] })
+                dispatch({
+                    type: "CHANGE_FILTERS", 
+                    payload: { ...filters, [typeSlug]: [tagSlug] }
+                })
             }
         } else {
-            setFilters({ ...filters, [typeSlug]: filters[typeSlug].filter(item => item !== tagSlug) })
+            dispatch({
+                type: "CHANGE_FILTERS", 
+                payload: { ...filters, [typeSlug]: filters[typeSlug].filter((item: any) => item !== tagSlug) }
+            })
         }
     }
 

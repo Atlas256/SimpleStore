@@ -9,8 +9,6 @@ import ButtonsListContainer from "./ButtonsListContainer";
 
 async function getProducts(path: string) {
   const { data } = await axios.get(`http://localhost:5000/api/products/${path}`)
-  console.log(data);
-  
   return data
 }
 
