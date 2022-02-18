@@ -26,7 +26,7 @@ export default function () {
   const [isShowCart, setIsShowCart] = useState(false)
 
   useEffect(() => {
-    setIsShowCart(true)
+    setIsShowCart(false)
   }, [location])
 
 
