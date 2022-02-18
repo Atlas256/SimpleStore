@@ -12,12 +12,26 @@ const localStorage = window.localStorage
 
 
 
+
 type TCartStore = {
   [key: string]: { count: number }
 }
 
 type TCartProduct = {
   [key: string]: string | number
+}
+
+
+
+
+async function getPorducts(ids: string[]) {
+
+  const { data } = await axios.get(SERVER_URL + 'api/products/ids', {
+    params: {
+      ids: ids
+    }
+  })
+  return data
 }
 
 
@@ -76,21 +90,15 @@ export default function ({ onShowCart }: TProps) {
         ...JSON.parse(String(localStorage.getItem("addedProducts")))
       })
     }
-  }, [cartProducts]);
+  }, []);
 
-  useEffect(() => {
-    if (cartStore) {
-      axios.get(SERVER_URL + 'api/products/ids', {
-        params: {
-          ids: Object.keys(cartStore)
-        }
-      }).then((data) => {
-        setCartProducts(data.data)
-      })
-    }
+  useMemo(() => {
+    getPorducts(Object.keys(cartStore)).then((data) => {
+      setCartProducts([...data])
+    })
   }, [cartStore])
 
-  useEffect(() => {
+  useMemo(() => {
     if (cartProducts.length !== 0) {
       setTotalPrice(cartProducts.reduce((acc, product) => acc + product.price * (cartStore[product._id] && cartStore[product._id]['count']), 0))
     } else {

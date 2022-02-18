@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Dispatch } from "redux";
 import Search from "../components/Search";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -39,6 +39,8 @@ export default function () {
       setText(mainReducer.text)
     }
   }, [mainReducer, location])
+
+
 
 
   const onChangeInput = handlerChangeInput(setText)

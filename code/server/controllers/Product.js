@@ -90,9 +90,11 @@ class Controller {
   async getFromIDs(req, res) {
     try {
 
-      if (req.query.ids) {
-        const products = await Model.find({ _id: { $in: req.query.ids } }, { __v: false })
+      if (req.query.ids !== undefined) {
+        const products = await Model.find({ _id: { $in: [...req.query.ids]} }, { __v: false })
         res.status(200).json(products)
+      } else {
+        res.status(200).json([])
       }
     } catch (error) {
       res.status(500).json(error)

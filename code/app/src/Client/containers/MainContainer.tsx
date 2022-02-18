@@ -41,7 +41,7 @@ export default function () {
 
   //PUSH DATA
   useEffect(() => {
-    if (location.includes('products') || location === '/') {
+    if (decodeURI(location).includes('products') || location === '/') {
       let newPath = ''
       newPath += text ? `text=${text};` : '';
       newPath += page ? `page=${page};` : '';

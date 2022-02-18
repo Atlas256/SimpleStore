@@ -152,7 +152,7 @@ export default function ({
         <CartList>
           {
             cartProducts.map((product) =>
-              cartStore[product._id] &&
+            cartStore[product._id] &&
               <CartItem
                 key={product._id}
                 cartStore={cartStore}
