@@ -84,8 +84,10 @@ const CartFotter = styled.div`
   padding: 1.5rem 1rem;
 `
 
-const TotalPrice = styled.div`
-  font-weight: 300;
+const TotalPriceBody = styled.div`
+
+
+  font-weight: 100;
   font-size: 24px;
 
   display: flex;
@@ -165,12 +167,12 @@ export default function ({
           }
         </CartList>
         <CartFotter>
-          <TotalPrice>
+          <TotalPriceBody>
             <div>Total price:</div>
             <div>{formatter.format(totalPrice ? totalPrice : 0)}</div>
-          </TotalPrice>
+          </TotalPriceBody>
           <ButtonCheckout
-            variant="outline-primary"
+            variant="outline-warning"
             onClick={onClickCheckout}
           >
             Go to checkout

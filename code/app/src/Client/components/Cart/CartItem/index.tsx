@@ -19,7 +19,7 @@ const Grid = styled.div`
   height: 80%;
 
   display: grid;
-  grid-template-columns: 20% 50% 30%;
+  grid-template-columns: 20% 65% 15%;
 `
 
 const ImageContainer = styled.div` 
@@ -38,7 +38,7 @@ const Image = styled.img`
 const Title = styled.div` 
   width: 100%;
   font-weight: 100;
-  font-size: 20px;
+  font-size: 18px;
   color: #0008;
   display: flex;
   padding: 0rem 1rem;
@@ -46,8 +46,8 @@ const Title = styled.div`
 `
 
 const Price = styled.div`
-  font-weight: 500;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 18px;
   color: #222;
   display: flex;
   justify-content: right;
@@ -64,18 +64,22 @@ const Buttons = styled.div`
 
 const ButtonRemove = styled.button` 
   background: #0000;
+  border: 1px solid #0001;
+  font-weight: 100;
   font-size: 16px;
-  color: #0004;
-  text-decoration: underline;
+  letter-spacing: 2px;
+  color: #0008;
+  transition: 0.25s;
   :hover {
-    color: #0008;
+    border: 1px solid #0000;
+    color: #0004;
     text-decoration: none;
   }
 `
 
 const CounterContainer = styled.div`
   min-height: 2rem;
-  border: 1px solid #0002;
+  border: 1px solid #0001;
   border-radius: 100rem;
   display: flex;
 `
@@ -132,11 +136,11 @@ export default function ({ cartStore, product, onRemoveItem, onSubtractCount, on
           {
             product.discount ?
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div>{formatter.format(product.price - product.discount)}</div>
-                <OldPrice>{formatter.format(product.price)}</OldPrice>
+                <div>{formatter.format(cartStore[product._id]['count'] * (product.price - product.discount))}</div>
+                <OldPrice>{formatter.format(cartStore[product._id]['count'] * product.price)}</OldPrice>
               </div>
               :
-              <div>{formatter.format(product.price)}</div>
+              <div>{formatter.format(cartStore[product._id]['count'] * product.price)}</div>
           }
         </Price>
       </Grid>
