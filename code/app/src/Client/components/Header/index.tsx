@@ -60,7 +60,7 @@ export default function ({ onShowCart }: TProps) {
         <SearchContainer />
       </div>
       <button
-        style={{ background: '#0000', color: '#FFF9' }}
+        style={{ background: '#0000', color: '#FFF' }}
         onClick={onShowCart(true)}
       >CART</button>
     </Header>

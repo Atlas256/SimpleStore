@@ -1,6 +1,7 @@
 import { Button, ListGroup } from 'react-bootstrap'
 import styled from 'styled-components'
 import { TPropduct } from '../../types'
+import CartItem from './CartItem'
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -24,7 +25,7 @@ const CartPage = styled.div`
 const CartBody = styled.div`
   max-width: 500px;
   min-width: 500px;
-  height: 100%;
+  height: 100vh;
 
   background: #FFF;
 
@@ -32,17 +33,71 @@ const CartBody = styled.div`
   flex-direction: column;
 `
 
-const Title = styled.div`
-  background: #27F;
-  font-weight: bold;
-  font-size: 32px;
+const CartHeader = styled.div`
+  min-height: 80px;
+
+  background: #27E;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 1rem;
+`
+
+const CartTitle = styled.button` 
+  background: #0000;
+  font-weight: 200;
+  font-size: 36px;
+  letter-spacing: 2.0px;
+  line-height: 36px;
   color: #FFF;
-  padding: 2rem 1rem;
+`
+
+const ButtonClose = styled.button`
+  background: #0000;
+  font-size: 22px;
+  line-height: 22px;
+  color: #FFF;
+  padding: 0.5rem;
+`
+
+const ButtonCheckout = styled(Button)` 
+  width: 100%;
+  border: 1px solid #0001;
+  font-weight: 100;
+  font-size: 24px;
+`
+
+const CartFotter = styled.div`
+  min-height: 150px;
+
+  box-shadow: 0px -1px 6px #0001;
+
+  font-weight: 500;
+  font-size: 32px;
+  color: #444;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 1rem;
 `
 
 const TotalPrice = styled.div`
+  font-weight: 300;
   font-size: 24px;
+
+  display: flex;
+  justify-content: space-between;
 `
+
+const CartList = styled.div`
+  height: 80%;
+  overflow-y: scroll;
+`
+
+
 
 
 
@@ -73,73 +128,54 @@ export default function ({
 }: TProps) {
 
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+  });
+
+
 
   return (
     <CartPage>
       <CartBody>
-        <Title>
-          Cart
-        </Title>
-        <ListGroup style={{ overflowY: 'scroll' }}>
+
+        <CartHeader>
+          <CartTitle>
+            Cart
+          </CartTitle>
+          <ButtonClose onClick={onShowCart(false)}>
+            ✕
+          </ButtonClose>
+        </CartHeader>
+
+        <CartList>
           {
             cartProducts.map((product) =>
               cartStore[product._id] &&
-              <ListGroup.Item key={product._id}>
-                <div style={{ display: 'flex' }}>
-                  <div style={{ width: '100px', height: '100px' }}>
-                    <img style={{ width: '100%', height: '100%', objectFit: 'contain' }} src={SERVER_URL + product.image} alt="" />
-                  </div>
-                  <div style={{ marginLeft: '10px' }}>
-                    <div>{product.title}</div>
-                    {
-                      !product.discount
-                        ?
-                        <div>{product.price} грн</div>
-                        :
-                        <div>
-                          <div style={{ textDecoration: 'line-through' }}>{product.price} грн</div>
-                          <div style={{ color: 'red' }}>{product.price - product.discount} грн</div>
-                        </div>
-                    }
-                    <Button
-                      variant='warning'
-                      onClick={onRemoveItem(product._id)}
-                    >REMOVE</Button>
-                  </div>
-                  <div style={{ marginLeft: 'auto', display: 'flex' }}>
-                    <div>
-                      <Button
-                        style={{ width: '100%' }}
-                        onClick={onSubtractCount(String(product._id))}
-                      >-</Button>
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>{cartStore[product._id]['count']}</div>
-                      <Button
-                        style={{ width: '100%' }}
-                        onClick={onAppendCount(String(product._id))}
-                      >+</Button>
-                    </div>
-                  </div>
-                </div>
-              </ListGroup.Item>
+              <CartItem
+                key={product._id}
+                cartStore={cartStore}
+                product={product}
+                onAppendCount={onAppendCount}
+                onSubtractCount={onSubtractCount}
+                onRemoveItem={onRemoveItem}
+              />
             )
           }
-        </ListGroup>
-        <div style={{ width: '100%', marginTop: 'auto' }}>
-        {
-          <TotalPrice>Total price: {totalPrice ? totalPrice : 0} грн</TotalPrice>
-        }
-          <Button
-            style={{ width: '100%' }}
+        </CartList>
+        <CartFotter>
+          <TotalPrice>
+            <div>Total price:</div>
+            <div>{formatter.format(totalPrice ? totalPrice : 0)}</div>
+          </TotalPrice>
+          <ButtonCheckout
             variant="outline-primary"
             onClick={onClickCheckout}
-          >ОФОРМИТЬ ЗАКАЗ</Button>
-          <Button
-            style={{ width: '100%' }}
-            variant="outline-warning"
-            onClick={onShowCart(false)}
-          >ПРОДОЛЖИТЬ ПОКУПКИ
-          </Button>
-        </div>
+          >
+            Go to checkout
+          </ButtonCheckout>
+        </CartFotter>
       </CartBody>
     </CartPage>
   )
