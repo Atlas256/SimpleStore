@@ -74,6 +74,7 @@ const ButtonRemove = styled.button`
 `
 
 const CounterContainer = styled.div`
+  min-height: 2rem;
   border: 1px solid #0002;
   border-radius: 100rem;
   display: flex;
@@ -91,6 +92,12 @@ const CounterInput = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+const OldPrice = styled.div` 
+  color: #0002;
+  text-decoration: line-through;
+  font-weight: 100;
 `
 
 
@@ -122,13 +129,23 @@ export default function ({ cartStore, product, onRemoveItem, onSubtractCount, on
           {product.title}
         </Title>
         <Price>
-          {formatter.format(product.price)}
+          {
+            product.discount ?
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div>{formatter.format(product.price - product.discount)}</div>
+                <OldPrice>{formatter.format(product.price)}</OldPrice>
+              </div>
+              :
+              <div>{formatter.format(product.price)}</div>
+          }
         </Price>
       </Grid>
       <Buttons>
         <ButtonRemove onClick={onRemoveItem(product._id)}>REMOVE</ButtonRemove>
         <CounterContainer>
-          <CounterButton onClick={onSubtractCount(product._id)}>-</CounterButton>
+          <CounterButton 
+          style={{color: cartStore[product._id]['count'] === 1 ? '#0002' : '#000' }}
+          onClick={onSubtractCount(product._id)}>-</CounterButton>
           <CounterInput>
             {cartStore[product._id]['count']}
           </CounterInput>

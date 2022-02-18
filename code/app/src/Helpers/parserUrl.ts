@@ -1,5 +1,11 @@
 export default function (str: string) {
 
+  if(!str.includes('=')) {
+    return {
+      text: ''
+    }
+  }
+
   const params = str
     .toLowerCase()
     .replace(/\//g, ';')

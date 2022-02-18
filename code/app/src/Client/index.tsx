@@ -26,7 +26,7 @@ export default function () {
   const [isShowCart, setIsShowCart] = useState(false)
 
   useEffect(() => {
-    setIsShowCart(true)
+    setIsShowCart(false)
   }, [location])
 
 
@@ -36,7 +36,12 @@ export default function () {
   return (
     <Provider store={store}>
     <Wrapper>
-      <HeaderContainer onShowCart={onShowCart}/>
+      {
+        location.includes('products') || location === '/' ?
+        <HeaderContainer onShowCart={onShowCart}/>
+        :
+        null
+      }
       <PagesContainer />
       {
         isShowCart && <CartContainer onShowCart={onShowCart} />

@@ -5,8 +5,10 @@ import parserUrl from "../../Helpers/parserUrl"
 import CheckoutPage from "../pages/CheckoutPage"
 import MainPage from "../pages/MainPage"
 import ProductsPage from "../pages/ProductsPage"
-import SearchPage from "../pages/SearchPage"
 import OnePageContainer from "./OnePage/OnePageContainer"
+import SearchPage from "../pages/SearchPage"
+
+
 
 
 
@@ -39,20 +41,22 @@ export default function () {
 
   //PUSH DATA
   useEffect(() => {
-    let newPath = ''
-    newPath += text ? `text=${text};` : '';
-    newPath += page ? `page=${page};` : '';
-    newPath += filters ? Object.keys(filters).reduce((acc, typeName) => {
-      if (filters[typeName].join('').length) {
-        acc += typeName + '=' + filters[typeName].join(',') + ';'
+    if (location.includes('products') || location === '/') {
+      let newPath = ''
+      newPath += text ? `text=${text};` : '';
+      newPath += page ? `page=${page};` : '';
+      newPath += filters ? Object.keys(filters).reduce((acc, typeName) => {
+        if (filters[typeName].join('').length) {
+          acc += typeName + '=' + filters[typeName].join(',') + ';'
+        }
+        return acc
+      }, '') : ''
+  
+      if (JSON.stringify(mainReducer) !== JSON.stringify({})) {
+        navigate(`/products/${newPath}`)
+      } else {
+        navigate('/')
       }
-      return acc
-    }, '') : ''
-
-    if (JSON.stringify(mainReducer) !== JSON.stringify({})) {
-      navigate(`/products/${newPath}`)
-    } else {
-      navigate('/')
     }
   }, [mainReducer])
 
