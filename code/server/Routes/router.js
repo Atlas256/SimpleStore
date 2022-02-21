@@ -4,6 +4,7 @@ import Type from '../controllers/Type.js'
 import Tag from '../controllers/Tag.js'
 import Product from '../controllers/Product.js'
 import Sidebar from '../controllers/Sidebar.js'
+import Checkout from '../controllers/Checkout.js'
 
 import emailValidator from '../validators/emailValidator.js'
 import passwordValidator from '../validators/passwordValidator.js'
@@ -16,6 +17,9 @@ import errorMiddlevare from '../validators/errorMiddlevare.js'
 
 
 const router = new Router()
+
+//! CHECKOUT
+router.post('/create-checkout-session', Checkout.checkout)
 
 //! OTHERS
 router.get('/sidebar/*', Sidebar.getSidebarData)
