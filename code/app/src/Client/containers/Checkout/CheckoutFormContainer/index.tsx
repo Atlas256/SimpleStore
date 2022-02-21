@@ -1,24 +1,15 @@
 import axios from "axios";
 import { Navigate, NavigateFunction, useNavigate } from "react-router";
-import { Elements } from '@stripe/react-stripe-js';
-
-import UserDataFrom from "../../../components/Checkout/UserDataFrom";
-import CheckoutForm from "../../../components/Checkout/CheckoutForm";
 import { useEffect, useState } from "react";
-import { loadStripe, Stripe } from "@stripe/stripe-js";
+import CheckoutForm from "../../../components/Checkout/CheckoutForm";
 
-
-
-
-
-//const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLICK_KEY!);
 
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
-const handlerClickCheckout = (navigate: NavigateFunction) => () => {
+const handlerClickCheckout = () => () => {
   axios.post(
     SERVER_URL + 'api/payment', {
     body: JSON.stringify({
@@ -30,7 +21,7 @@ const handlerClickCheckout = (navigate: NavigateFunction) => () => {
   })
     .then((data) => {
       return data.data
-    }).then(({url}) => {
+    }).then(({ url }) => {
       window.location = url
     })
 }
@@ -39,39 +30,12 @@ const handlerClickCheckout = (navigate: NavigateFunction) => () => {
 
 
 
-
-
-
 export default function () {
 
-  const navigate = useNavigate()
-
-  const onClickCheckout = handlerClickCheckout(navigate)
-
-  const [options, setOptions] = useState({
-    clientSecret: '',
-    appearance: {/*...*/ }
-  })
-
-
-
-  useEffect(() => {
-    axios.get(SERVER_URL + 'api/secret').then((data) => {
-      console.log(data.data);
-      setOptions({ ...options, ['clientSecret']: data.data })
-    })
-  }, [])
+  const onClickCheckout = handlerClickCheckout()
 
 
   return (
-    <>
-      <div></div>
-
-
-        <UserDataFrom onClickCheckout={onClickCheckout} />
-
-
-
-    </>
+    <CheckoutForm onClickCheckout={onClickCheckout} />
   )
 }

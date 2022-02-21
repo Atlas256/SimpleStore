@@ -38,8 +38,8 @@ class Controller {
           },
           quantity: 1
         }],
-        success_url: process.env.CLIENT_URL + '/ok',
-        cancel_url: process.env.CLIENT_URL + '/newok'
+        success_url: process.env.CLIENT_URL + '/success',
+        cancel_url: process.env.CLIENT_URL + '/cancel'
       })
 
       res.status(200).json({ url: session.url })

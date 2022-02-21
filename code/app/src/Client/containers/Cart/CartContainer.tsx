@@ -64,9 +64,10 @@ const handlerRemoveItem = (setCartStore: React.Dispatch<React.SetStateAction<TCa
   })
 }
 
-const handlerClickCheckout = (navigate: NavigateFunction) => () => {
+const handlerClickCheckout = (navigate: NavigateFunction, cartProducts?: TPropduct[]) => () => {
   navigate('/checkout')
 }
+
 
 
 
