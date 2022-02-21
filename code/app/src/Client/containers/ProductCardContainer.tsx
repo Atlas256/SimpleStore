@@ -29,7 +29,7 @@ const handlerClickAdd= (productID: string) => () => {
 }
 
 const handlerClickProduct = (navigate: NavigateFunction) => (productSlug: string) => () => {
-  navigate('/product/' + productSlug)
+  navigate('/product/' + productSlug )
 }
 
 

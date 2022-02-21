@@ -30,7 +30,7 @@ export default function () {
 
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
       <ProductsList products={products} />
       <ButtonsListContainer pagesCount={pagesCount} />
     </div>

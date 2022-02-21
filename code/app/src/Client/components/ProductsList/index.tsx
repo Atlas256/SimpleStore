@@ -1,8 +1,38 @@
+import styled from 'styled-components'
+
 import ProductCardContainer from "../../containers/ProductCardContainer";
 import { TPropduct } from "../../types"
-import ProductCard from "../ProductCard";
 
 
+
+const ListBody = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  @media screen and (min-width: 300px) {
+    grid-template-columns: repeat(1, 100%);
+  }
+
+  @media screen and (min-width: 600px) {
+    grid-template-columns: repeat(2, 50%);
+  }
+
+  @media screen and (min-width: 800px) {
+    grid-template-columns: repeat(3, 33%);
+  }
+
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: repeat(4, 25%);
+  }
+  
+  @media screen and (min-width: 1400px) {
+    grid-template-columns: repeat(5, 20%);
+  }
+`
 
 
 
@@ -16,13 +46,13 @@ export default function ({ products }: TProps) {
 
 
   return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', overflowY: 'scroll', padding: '3rem' }}>
+    <ListBody>
       {
         products.map((product: TPropduct) =>
           <ProductCardContainer key={product._id} product={product} />
         )
       }
-    </div>
+    </ListBody>
   )
 }
 

@@ -10,16 +10,16 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
 const CardBody = styled.div`
-  width: 200px;
-  height: 350px;
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
 
-  box-shadow: 0px 0px 6px #0001;
+  border: 1px solid #0001;
 
-  margin: 1rem;
   padding: 1rem;
 
   display: grid;
-  grid-template-rows: 40% 40% 10% 10%;
+  grid-template-rows: 40% 40% 20%;
 `
 
 const ImageContainer = styled.div` 
@@ -32,12 +32,21 @@ const Image = styled.img`
 
   object-fit: contain;
   object-position: center;
+
+  cursor: pointer;
 `
 
 const Title = styled.div` 
   font-weight: 200;
   font-size: 20px;
   color: #222;
+`
+
+const CartFotter = styled.div` 
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 
 const Price = styled.div`
@@ -52,6 +61,20 @@ const OldPrice = styled.div`
   color: #0002;
   text-decoration: line-through;
   font-weight: 100;
+`
+
+const ButtonCart = styled.button` 
+  background: #0000;
+  font-weight: 100;
+  font-size: 24px;
+  color: #27F;
+
+  transition: 0.25s;
+
+  :hover {
+    color: #F906
+  }
+
 `
 
 
@@ -72,23 +95,36 @@ export default function ({ product, onClickProduct, onClickAdd }: TProps) {
 
   return (
     <CardBody>
-      <ImageContainer>
+      <ImageContainer
+        onClick={onClickProduct(product.slug)}
+        >
         <Image src={SERVER_URL + product.image} />
       </ImageContainer>
+
       <Title>
         {product.title}
       </Title>
-      <Price>
-        {
-          product.discount ?
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{formatter.format(product.price - product.discount)}</div>
-              <OldPrice>{formatter.format(product.price)}</OldPrice>
-            </div>
-            :
-            <div>{formatter.format(product.price)}</div>
-        }
-      </Price>
+
+      <CartFotter>
+
+        <Price>
+          {
+            product.discount ?
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div>{formatter.format(product.price - product.discount)}</div>
+                <OldPrice>{formatter.format(product.price)}</OldPrice>
+              </div>
+              :
+              <div>{formatter.format(product.price)}</div>
+          }
+        </Price>
+        <ButtonCart
+          onClick={onClickAdd(product._id)}
+        >
+          ADD
+        </ButtonCart>
+      </CartFotter>
+
 
     </CardBody>
   )
