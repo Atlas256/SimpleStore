@@ -8,11 +8,13 @@ import { TAction } from "../store/reducers/mainReducer";
 
 
 
+const handlerClickSend = (text: string, location: string, dispatch: Dispatch<TAction>, navigate: NavigateFunction) => () => {
 
+  dispatch({ type: "CHANGE_ALL", payload: { text: text, page: undefined } })
 
-const handlerClickSend = (text: string, dispatch: Dispatch<TAction>, navigate: NavigateFunction) => () => {
-  dispatch({ type: "CHANGE_TEXT", payload: text })
-  navigate('/products/')
+  if (!location.includes('products')) {
+    navigate('/products/')
+  }
 }
 
 const handlerChangeInput = (setText: React.Dispatch<React.SetStateAction<string>>) => (event: React.ChangeEvent<any>) => {
@@ -44,7 +46,7 @@ export default function () {
 
 
   const onChangeInput = handlerChangeInput(setText)
-  const onClickSend = handlerClickSend(textValue, dispatch, navigate)
+  const onClickSend = handlerClickSend(textValue, location, dispatch, navigate)
 
   return (
     <Search text={textValue} onChangeInput={onChangeInput} onClickSend={onClickSend} />
