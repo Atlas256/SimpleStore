@@ -23,6 +23,13 @@ export default function () {
         <Form.Label style={{color: '#0006'}}>Мобильный телефон</Form.Label>
         <Form.Control type="phone" />
       </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label style={{color: '#0006'}}>Адрес доставки</Form.Label>
+        <Form.Control type="phone" />
+      </Form.Group>
+
+      <Button variant="primary">Заказ потверждаю</Button>
     </Form>
   )
 }

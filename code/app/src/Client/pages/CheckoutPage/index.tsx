@@ -1,8 +1,6 @@
 import { Button } from 'react-bootstrap'
 import styled from 'styled-components'
-import ContactDataContainer from '../../containers/Checkout/ContactDataContainer'
-import DeliveryDataContainer from '../../containers/Checkout/DeliveryDataContainer'
-import PayDataContainer from '../../containers/Checkout/PayDataContainer'
+import FormDataContainer from '../../containers/Checkout/FormDataContainer'
 
 
 
@@ -33,11 +31,8 @@ export default function () {
       <PageInner>
         <PageTitle>Оформление заказа</PageTitle>
 
-        <ContactDataContainer />
-        <DeliveryDataContainer />
-        <PayDataContainer />
+        <FormDataContainer />
 
-        <Button variant="primary">Заказ потверждаю</Button>
       </PageInner>
     </Page>
   )
