@@ -11,15 +11,39 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const CardBody = styled.div`
   width: 100%;
-  height: 100%;
-  max-height: 500px;
+
 
   border: 1px solid #0001;
 
   padding: 1rem;
 
   display: grid;
-  grid-template-rows: 40% 40% 20%;
+  grid-template-rows: 50% 40% 10%;
+
+
+  @media screen and (min-width: 300px) {
+    min-height: 500px;
+  }
+
+  @media screen and (min-width: 600px) {
+    min-height: 500px;
+  }
+
+  @media screen and (min-width: 800px) {
+    height: 100%;
+    max-height: 50%;
+  }
+
+  @media screen and (min-width: 1000px) {
+    min-height: 50%;
+    max-height: 50%;
+  }
+  
+  @media screen and (min-width: 1400px) {
+    min-height: 50%;
+    max-height: 50%;
+  }
+
 `
 
 const ImageContainer = styled.div` 

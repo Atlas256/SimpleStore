@@ -14,23 +14,23 @@ const ListBody = styled.div`
   overflow-x: hidden;
 
   @media screen and (min-width: 300px) {
-    grid-template-columns: repeat(1, 100%);
+    grid-template-columns: repeat(1, 1fr);
   }
 
   @media screen and (min-width: 600px) {
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(2, 2fr);
   }
 
   @media screen and (min-width: 800px) {
-    grid-template-columns: repeat(3, 33%);
+    grid-template-columns: repeat(3, 3fr);
   }
 
-  @media screen and (min-width: 1200px) {
-    grid-template-columns: repeat(4, 25%);
+  @media screen and (min-width: 1000px) {
+    grid-template-columns: repeat(4, 4fr);
   }
   
   @media screen and (min-width: 1400px) {
-    grid-template-columns: repeat(5, 20%);
+    grid-template-columns: repeat(5, 5fr);
   }
 `
 
