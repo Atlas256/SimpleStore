@@ -21,7 +21,7 @@ const DB_URL = process.env.DB_URL
 app.use(express.json())
 app.use(express.static(path.resolve('static')))
 app.use(cors({
-  origin: [process.env.CLIENT_URL, "https://checkout.stripe.com"]
+  origin: ['*', process.env.CLIENT_URL, "https://checkout.stripe.com"]
 }));
 app.use(fileUploader({}))
 

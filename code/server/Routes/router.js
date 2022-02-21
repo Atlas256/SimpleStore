@@ -19,7 +19,8 @@ import errorMiddlevare from '../validators/errorMiddlevare.js'
 const router = new Router()
 
 //! CHECKOUT
-router.post('/create-checkout-session', Checkout.checkout)
+router.get('/secret', Checkout.secret)
+router.post('/payment', Checkout.payment)
 
 //! OTHERS
 router.get('/sidebar/*', Sidebar.getSidebarData)

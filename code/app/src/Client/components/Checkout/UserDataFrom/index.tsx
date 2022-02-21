@@ -38,7 +38,9 @@ export default function ({ onClickCheckout }: TProps) {
 
       <Button
         onClick={onClickCheckout}
-        variant="primary">Заказ потверждаю</Button>
+        variant="primary">
+        Заказ потверждаю
+      </Button>
     </Form>
   )
 }
