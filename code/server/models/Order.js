@@ -25,7 +25,7 @@ const Order = new mongoose.Schema({
 
   totalPrice: { type: Number, required: true },
   orderDate: { type: Date, required: true },
-  isSuccess: { type: Boolean, required: true }
+  status: { type: String, required: true }
 })
 
 
