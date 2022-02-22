@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import HeaderContainer from './containers/HeaderContainer'
-import CartContainer from './containers/Cart/CartContainer';
+import CartContainer from './containers/ModalCart/ModalCartContainer';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { Provider } from 'react-redux';

@@ -1,7 +1,7 @@
-import { Button, ListGroup } from 'react-bootstrap'
 import styled from 'styled-components'
-import { TPropduct } from '../../types'
-import CartItem from './CartItem'
+import { Button, ListGroup } from 'react-bootstrap'
+import { TProduct } from '../../types'
+import CartListContainer from '../../containers/CartListContainer'
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -94,10 +94,7 @@ const TotalPriceBody = styled.div`
   justify-content: space-between;
 `
 
-const CartList = styled.div`
-  height: 80%;
-  overflow-y: scroll;
-`
+
 
 
 
@@ -108,24 +105,14 @@ const CartList = styled.div`
 
 
 type TProps = {
-  cartStore: { [key: string]: any }
-  cartProducts: TPropduct[]
   totalPrice: number
   onShowCart: (isShow: boolean) => () => void
-  onAppendCount: (_id: string) => () => void
-  onSubtractCount: (_id: string) => () => void
-  onRemoveItem: (_id: string) => () => void
   onClickCheckout: () => void
 }
 
 export default function ({
-  cartStore,
-  cartProducts,
   totalPrice,
   onShowCart,
-  onAppendCount,
-  onSubtractCount,
-  onRemoveItem,
   onClickCheckout
 }: TProps) {
 
@@ -151,21 +138,7 @@ export default function ({
           </ButtonClose>
         </CartHeader>
 
-        <CartList>
-          {
-            cartProducts.map((product) =>
-            cartStore[product._id] &&
-              <CartItem
-                key={product._id}
-                cartStore={cartStore}
-                product={product}
-                onAppendCount={onAppendCount}
-                onSubtractCount={onSubtractCount}
-                onRemoveItem={onRemoveItem}
-              />
-            )
-          }
-        </CartList>
+        <CartListContainer isActive={true} />
         <CartFotter>
           <TotalPriceBody>
             <div>Total price:</div>

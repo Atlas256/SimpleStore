@@ -26,7 +26,7 @@ export type TSidebarData = {
 
 
 
-export type TPropduct = {
+export type TProduct = {
     _id: string,
     tagsID: string[],
     title: string,

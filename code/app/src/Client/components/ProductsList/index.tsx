@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import ProductCardContainer from "../../containers/ProductCardContainer";
-import { TPropduct } from "../../types"
+import { TProduct } from "../../types"
 
 
 
@@ -37,7 +37,7 @@ const ListBody = styled.div`
 
 
 type TProps = {
-  products: TPropduct[]
+  products: TProduct[]
 }
 
 
@@ -48,7 +48,7 @@ export default function ({ products }: TProps) {
   return (
     <ListBody>
       {
-        products.map((product: TPropduct) =>
+        products.map((product: TProduct) =>
           <ProductCardContainer key={product._id} product={product} />
         )
       }

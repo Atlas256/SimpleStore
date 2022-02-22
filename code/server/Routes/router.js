@@ -19,7 +19,7 @@ import errorMiddlevare from '../validators/errorMiddlevare.js'
 const router = new Router()
 
 //! CHECKOUT
-router.get('/secret', Checkout.secret)
+//router.get('/secret', Checkout.secret)//!REMOVED
 router.post('/payment', Checkout.payment)
 
 //! OTHERS

@@ -3,7 +3,8 @@ import Stripe from 'stripe';
 
 
 class Controller {
-
+//! REMOVED
+/*
   async secret(req, res) {
     try {
       const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
@@ -20,6 +21,7 @@ class Controller {
       res.status(500).json({ error: error.message })
     }
   }
+*/
 
   async payment(req, res) {
     try {

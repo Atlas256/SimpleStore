@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import OnePage from "../../pages/OnePage";
-import { TPropduct } from "../../types";
+import { TProduct } from "../../types";
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
@@ -14,12 +14,12 @@ const getProduct = async (slug: string) => {
 }
 
 
-export default function() {
+export default function () {
 
   const location = useLocation().pathname
   const slug = location.replace('/product/', '')
 
-  const [product, setProduct] = useState<TPropduct | undefined>()
+  const [product, setProduct] = useState<TProduct | undefined>()
 
 
 
@@ -33,7 +33,7 @@ export default function() {
 
 
 
-  return(
-    <OnePage product={product}/>
+  return (
+    <OnePage product={product} />
   )
 }

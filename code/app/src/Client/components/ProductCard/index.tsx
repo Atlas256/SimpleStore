@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Card, Button } from "react-bootstrap";
-import { TPropduct } from '../../types';
+import { TProduct } from '../../types';
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -103,7 +103,7 @@ const ButtonCart = styled.button`
 
 
 type TProps = {
-  product: TPropduct
+  product: TProduct
   onClickProduct: (productSlug: string) => () => void
   onClickAdd: (productID: string) => () => void
 }
@@ -121,7 +121,7 @@ export default function ({ product, onClickProduct, onClickAdd }: TProps) {
     <CardBody>
       <ImageContainer
         onClick={onClickProduct(product.slug)}
-        >
+      >
         <Image src={SERVER_URL + product.image} />
       </ImageContainer>
 

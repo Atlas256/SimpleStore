@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap'
 import styled from 'styled-components'
-import { TPropduct } from '../../../types';
+import { TProduct } from '../../../types';
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -107,14 +107,22 @@ const OldPrice = styled.div`
 
 type TProps = {
   cartStore: { [key: string]: any }
-  product: TPropduct
+  product: TProduct
   onAppendCount: (_id: string) => () => void
   onSubtractCount: (_id: string) => () => void
   onRemoveItem: (_id: string) => () => void
+  isActive: boolean
 }
 
 
-export default function ({ cartStore, product, onRemoveItem, onSubtractCount, onAppendCount }: TProps) {
+export default function ({
+  cartStore,
+  product,
+  onRemoveItem,
+  onSubtractCount,
+  onAppendCount,
+  isActive 
+}: TProps) {
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -144,18 +152,22 @@ export default function ({ cartStore, product, onRemoveItem, onSubtractCount, on
           }
         </Price>
       </Grid>
-      <Buttons>
-        <ButtonRemove onClick={onRemoveItem(product._id)}>REMOVE</ButtonRemove>
-        <CounterContainer>
-          <CounterButton 
-          style={{color: cartStore[product._id]['count'] === 1 ? '#0002' : '#000' }}
-          onClick={onSubtractCount(product._id)}>-</CounterButton>
-          <CounterInput>
-            {cartStore[product._id]['count']}
-          </CounterInput>
-          <CounterButton onClick={onAppendCount(product._id)}>+</CounterButton>
-        </CounterContainer>
-      </Buttons>
+      {
+        isActive
+        &&
+        <Buttons>
+          <ButtonRemove onClick={onRemoveItem(product._id)}>REMOVE</ButtonRemove>
+          <CounterContainer>
+            <CounterButton
+              style={{ color: cartStore[product._id]['count'] === 1 ? '#0002' : '#000' }}
+              onClick={onSubtractCount(product._id)}>-</CounterButton>
+            <CounterInput>
+              {cartStore[product._id]['count']}
+            </CounterInput>
+            <CounterButton onClick={onAppendCount(product._id)}>+</CounterButton>
+          </CounterContainer>
+        </Buttons>
+      }
     </ItemBody>
   )
 }

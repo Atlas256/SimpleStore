@@ -18,12 +18,12 @@ export default function ({ onClickCheckout }: TProps) {
       </div>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label style={{ color: '#0006', marginTop: '1rem' }}>Имя</Form.Label>
-        <Form.Control type="email" />
+        <Form.Control type="text" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label style={{ color: '#0006' }}>Фамилия</Form.Label>
-        <Form.Control type="password" />
+        <Form.Label style={{ color: '#0006' }}>Email</Form.Label>
+        <Form.Control type="email" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -33,7 +33,7 @@ export default function ({ onClickCheckout }: TProps) {
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label style={{ color: '#0006' }}>Адрес доставки</Form.Label>
-        <Form.Control type="phone" />
+        <Form.Control type="text" />
       </Form.Group>
 
       <Button

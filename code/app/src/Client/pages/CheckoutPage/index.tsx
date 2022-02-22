@@ -29,7 +29,7 @@ export default function () {
   return (
     <Page>
       <PageInner>
-        <PageTitle>Оформление заказа</PageTitle>
+        <PageTitle>Checkout</PageTitle>
 
         <CheckoutFormContainer />
 

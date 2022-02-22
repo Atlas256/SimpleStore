@@ -1,6 +1,6 @@
 import { NavigateFunction, useNavigate } from "react-router";
 import ProductCard from "../components/ProductCard";
-import { TPropduct } from "../types";
+import { TProduct } from "../types";
 
 
 type TAddedProduct = {
@@ -10,7 +10,7 @@ type TAddedProduct = {
 
 const localStorage = window.localStorage;
 
-const handlerClickAdd= (productID: string) => () => {
+const handlerClickAdd = (productID: string) => () => {
   let addedProducts: { [key: string]: TAddedProduct } = {}
   if (localStorage.getItem("addedProducts")) {
     addedProducts = JSON.parse(String(localStorage.getItem("addedProducts")));
@@ -29,15 +29,15 @@ const handlerClickAdd= (productID: string) => () => {
 }
 
 const handlerClickProduct = (navigate: NavigateFunction) => (productSlug: string) => () => {
-  navigate('/product/' + productSlug )
+  navigate('/product/' + productSlug)
 }
 
 
 type TProps = {
-  product: TPropduct
+  product: TProduct
 }
 
-export default function ({product}: TProps) {
+export default function ({ product }: TProps) {
 
 
   const navigate = useNavigate()
@@ -45,10 +45,10 @@ export default function ({product}: TProps) {
   const onClickProduct = handlerClickProduct(navigate)
 
   return (
-    <ProductCard 
-    product={product} 
-    onClickProduct={onClickProduct}
-    onClickAdd={handlerClickAdd}
+    <ProductCard
+      product={product}
+      onClickProduct={onClickProduct}
+      onClickAdd={handlerClickAdd}
     />
   )
 }
