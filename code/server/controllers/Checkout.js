@@ -3,43 +3,29 @@ import Stripe from 'stripe';
 
 
 class Controller {
-//! REMOVED
-/*
-  async secret(req, res) {
-    try {
-      const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
-
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: 1099,
-        currency: 'usd',
-        automatic_payment_methods: { enabled: true },
-      });
-
-      const intent = paymentIntent;
-      res.json({ privateKey: intent.client_secret });
-    } catch (error) {
-      res.status(500).json({ error: error.message })
-    }
-  }
-*/
 
   async payment(req, res) {
     try {
       const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
+      const items = req.body.items;
+
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        line_items: [{
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'Test product'
+        line_items: items.map(item => {
+          return {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: item.title,
+              },
+              unit_amount: item.price * 100,
             },
-            unit_amount: 7777
-          },
-          quantity: 1
-        }],
+            quantity: 1
+          }
+        }),
         success_url: process.env.CLIENT_URL + '/success',
         cancel_url: process.env.CLIENT_URL + '/cancel'
       })

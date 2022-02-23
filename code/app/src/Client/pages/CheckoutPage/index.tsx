@@ -1,5 +1,6 @@
 import { Button } from 'react-bootstrap'
 import styled from 'styled-components'
+import CartListContainer from '../../containers/CartListContainer'
 import CheckoutFormContainer from '../../containers/Checkout/CheckoutFormContainer'
 
 
@@ -32,6 +33,7 @@ export default function () {
         <PageTitle>Checkout</PageTitle>
 
         <CheckoutFormContainer />
+        <CartListContainer isActive={false} />
 
       </PageInner>
     </Page>

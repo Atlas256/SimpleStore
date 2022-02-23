@@ -79,7 +79,7 @@ export default function ({ isActive }: TProps) {
   const dispatch = useAppDispatch()
 
 
-  useMemo(() => {
+  useEffect(() => {
     if (localStorage.getItem("addedProducts")) {
       dispatch({
         type: "CHANGE_CART_STORE",
@@ -88,17 +88,17 @@ export default function ({ isActive }: TProps) {
     }
   }, []);
 
-  useMemo(() => {
-    getPorducts(Object.keys(cartStore)).then((data) => {
-      dispatch({
-        type: "CHANGE_CART_PRODUCTS",
-        payload: [...data]
+  useEffect(() => {
+      getPorducts(Object.keys(cartStore)).then((data) => {
+        dispatch({
+          type: "CHANGE_CART_PRODUCTS",
+          payload: [...data]
+        })
       })
-    })
   }, [cartStore])
 
 
-  useMemo(() => {
+  useEffect(() => {
     if (cartProducts.length !== 0) {
       dispatch({
         type: "CHANGE_TOTAL_PRICE",
@@ -113,7 +113,7 @@ export default function ({ isActive }: TProps) {
     }
   }, [cartProducts])
 
-  useMemo(() => {
+  useEffect(() => {
     if (localStorage.getItem("addedProducts") && cartProducts.length) {
       localStorage.setItem('addedProducts', JSON.stringify(cartStore))
     }
